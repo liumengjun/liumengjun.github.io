@@ -15,8 +15,8 @@
 
 var canvas;
 var context;
-var canvasWidth = 490;
-var canvasHeight = 220;
+var canvasWidth = 600;
+var canvasHeight = 270;
 var padding = 25;
 var lineWidth = 8;
 var colorPurple = "#cb3594";
@@ -41,23 +41,25 @@ var paint = false;
 var curColor = colorPurple;
 var curTool = "crayon";
 var curSize = "normal";
+var crayonStartX = 20;
 var mediumStartX = 18;
 var mediumStartY = 19;
 var mediumImageWidth = 93;
 var mediumImageHeight = 46;
-var drawingAreaX = 111;
-var drawingAreaY = 11;
-var drawingAreaWidth = 267;
-var drawingAreaHeight = 200;
-var toolHotspotStartY = 23;
-var toolHotspotHeight = 38;
-var sizeHotspotStartY = 157;
-var sizeHotspotHeight = 36;
+var drawingAreaX = 136;
+var drawingAreaY = 14;
+var drawingAreaWidth = 327;
+var drawingAreaHeight = 244;
+var toolHotspotStartY = 31;
+var toolHotspotHeight = 44;
+var sizeHotspotStartX = drawingAreaX + drawingAreaWidth;
+var sizeHotspotStartY = 185;
+var sizeHotspotHeight = 60;
 var sizeHotspotWidthObject = new Object();
-sizeHotspotWidthObject.huge = 39;
-sizeHotspotWidthObject.large = 25;
-sizeHotspotWidthObject.normal = 18;
-sizeHotspotWidthObject.small = 16;
+sizeHotspotWidthObject.huge = 51;
+sizeHotspotWidthObject.large = 24;
+sizeHotspotWidthObject.normal = 24;
+sizeHotspotWidthObject.small = 19;
 var totalLoadResources = 8;
 var curLoadResNum = 0;
 /**
@@ -153,7 +155,6 @@ function prepareCanvas()
 			{
 				if(mouseY > sizeHotspotStartY)
 				{
-					var sizeHotspotStartX = drawingAreaX + drawingAreaWidth;
 					if(mouseY < sizeHotspotStartY + sizeHotspotHeight && mouseX > sizeHotspotStartX)
 					{
 						if(mouseX < sizeHotspotStartX + sizeHotspotWidthObject.huge){
@@ -248,6 +249,7 @@ function redraw()
 
 		// Purple
 		locX = (curColor == colorPurple) ? 18 : 52;
+		locX += crayonStartX;
 		locY = 19;
 
 		context.beginPath();
@@ -272,6 +274,7 @@ function redraw()
 
 		// Green
 		locX = (curColor == colorGreen) ? 18 : 52;
+		locX += crayonStartX;
 		locY += 46;
 
 		context.beginPath();
@@ -296,6 +299,7 @@ function redraw()
 
 		// Yellow
 		locX = (curColor == colorYellow) ? 18 : 52;
+		locX += crayonStartX;
 		locY += 46;
 
 		context.beginPath();
@@ -318,8 +322,9 @@ function redraw()
 			context.drawImage(crayonImage, 0, 0, 59, mediumImageHeight, locX, locY, 59, mediumImageHeight);
 		}
 
-		// Yellow
+		// Brown
 		locX = (curColor == colorBrown) ? 18 : 52;
+		locX += crayonStartX;
 		locY += 46;
 
 		context.beginPath();
@@ -432,15 +437,15 @@ function redraw()
 	}
 
 	if(curSize == "small"){
-		locX = 467;
+		locX = sizeHotspotStartX + sizeHotspotWidthObject.huge + sizeHotspotWidthObject.large + sizeHotspotWidthObject.normal + sizeHotspotWidthObject.small/2;;;
 	}else if(curSize == "normal"){
-		locX = 450;
+		locX = sizeHotspotStartX + sizeHotspotWidthObject.huge + sizeHotspotWidthObject.large + sizeHotspotWidthObject.normal/2;;
 	}else if(curSize == "large"){
-		locX = 428;
+		locX = sizeHotspotStartX + sizeHotspotWidthObject.huge + sizeHotspotWidthObject.large/2;
 	}else if(curSize == "huge"){
-		locX = 399;
+		locX = sizeHotspotStartX + sizeHotspotWidthObject.huge/2;
 	}
-	locY = 189;
+	locY = sizeHotspotStartY + sizeHotspotHeight*0.8;
 	context.beginPath();
 	context.rect(locX, locY, 2, 12);
 	context.closePath();
