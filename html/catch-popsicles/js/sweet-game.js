@@ -67,6 +67,35 @@
 
   game.prepare = function() {
 
+    var clock, slice, layer;
+
+    // Create a canvas to draw on
+    layer = game.createLayer();
+
+    // Create a slice
+    slice = BLOCKS.slice({
+      layer: layer,
+      imageSrc: "images/coin.png", // Define sprite sheet location
+      numberOfFrames: 10, // Define number of frames of animation
+      loop: true,
+      visible: false
+    });
+
+    // Create a clock
+    clock = BLOCKS.clock();
+
+    // Update and render the slice on each tick of the clock
+    clock.addEventListener("tick", function() {
+      slice.update();
+      if (slice.dirty) { // Clear the layer if the slice is dirty
+        layer.clear();
+      }
+      slice.render();
+    });
+
+    // Start the clock
+    clock.start();
+
     var bg,
       index = 0,
       structure,
@@ -149,6 +178,10 @@
         game.stage.removeView(popsicle);
         popsicle.destroy();
         popsicle = null;
+        slice.show();
+        setTimeout(function() {
+          slice.hide();
+        }, 610);
       },
 
       dropPopsicle = function() {
