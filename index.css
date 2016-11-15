@@ -1,0 +1,21 @@
+a {
+  text-decoration: none;
+}
+
+sup {
+  font-size: 14px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 95%;
+}
+
+table tr td {
+  border: solid grey 1px;
+  padding: 7px 10px
+}
+
+table tr td:first-child {
+  width: 167px
+}
