@@ -726,7 +726,11 @@ a.article-title:hover {
   margin-right: 10px;
 }
 .article-tag-list-link:before {
-  content: "#";
+  content: "\f02b";
+  font-family: FontAwesome;
+  display: inline-block;
+  padding-right: 1px;
+  vertical-align: baseline;
 }
 .article-comment-link {
   float: right;
