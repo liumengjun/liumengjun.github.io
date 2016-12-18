@@ -4,3 +4,6 @@
 - brief of repos
 - something helpful
 - something interesting or exciting
+
+
+NOTE: source codes of Hexo project are in branch ``hexo-gh-blog``.
