@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liumengjun.github.io/"/>
-  <updated>2016-12-17T12:07:32.000Z</updated>
+  <updated>2016-12-19T18:02:50.000Z</updated>
   <id>https://liumengjun.github.io/</id>
   
   <author>
@@ -16,16 +16,57 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>标记语言文本学习</title>
+    <link href="https://liumengjun.github.io/2016/12/19/markup-text.html"/>
+    <id>https://liumengjun.github.io/2016/12/19/markup-text.html</id>
+    <published>2016-12-19T12:27:10.000Z</published>
+    <updated>2016-12-19T18:02:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>&nbsp;&nbsp;现在很流行的标记语言文本要数<a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="external">Markdown</a>(*.md)了，其实它的出现是为了更方便的读写，然后转换为我们更熟知的<a href="http://www.w3.org/TR/html40/" target="_blank" rel="external">HTML</a> (<em>HyperText Markup Language</em>)。<code>HTML</code>就是一种标记语言，<a href="http://opendocument.xml.org/" target="_blank" rel="external">XML</a> (<em>eXtensible Markup Language</em>)也是，它们都是Mark<strong><code>UP</code></strong>(标记上)，而<code>Markdown</code>是Mark<strong><code>DOWN</code></strong>(标记下)。<br>&nbsp;&nbsp;为了便于读写、或者数据交换，人类已经造出了很多标记语言文本，简单学习几个，具体语法使用某度和某哥会给出来一堆；<code>HTML</code>和<code>XML</code>就不说了。    </p>
+<h2 id="Markdown-md"><a href="#Markdown-md" class="headerlink" title="Markdown(*.md)"></a><a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="external">Markdown(*.md)</a></h2><p>&nbsp;&nbsp;应用于代码库的<code>Readme.md</code>文件，帮助文档等等各种场景。<br><code>Markdown</code>很简洁，特别易于读写，可以称得上是最轻量级的了。但是语法有些不统一，尤其各家工具处理缩进和换行时不一样。<br>优点明显大于缺点，大家都在向<a href="https://github.com" target="_blank" rel="external">GitHub</a>看齐吧。    </p>
+<a id="more"></a>
+<h2 id="reStructuredText-rst"><a href="#reStructuredText-rst" class="headerlink" title="reStructuredText(*.rst)"></a><a href="http://docutils.sourceforge.net/rst.html" target="_blank" rel="external">reStructuredText(*.rst)</a></h2><p>&nbsp;&nbsp;<a href="http://www.python.org" target="_blank" rel="external">Python</a>文档使用较多，写个<code>Readme.rst</code>也是没问题的，<a href="https://github.com" target="_blank" rel="external">GitHub</a>也可以直接渲染<code>rst</code>成<code>HTML</code>预览。<br><code>rst</code>语法很规范，对比<code>Markdown</code>有些语法相似，稍微复杂一点点。<a href="http://pypi.python.org/" target="_blank" rel="external">Python Package</a>的标准文档格式，起初还创建了一个工具<a href="http://www.sphinx-doc.org/" target="_blank" rel="external">Sphinx</a>来处理<code>Python</code>文档。<br>其实使用<code>rst</code>的也是大有人在。    </p>
+<h2 id="RubyDoc-rdoc"><a href="#RubyDoc-rdoc" class="headerlink" title="RubyDoc(*.rdoc)"></a><a href="https://rdoc.github.io/rdoc/" target="_blank" rel="external">RubyDoc(*.rdoc)</a></h2><p>&nbsp;&nbsp;<a href="http://www.ruby-lang.org/" target="_blank" rel="external">Ruby</a>项目的文档系统。<code>*.rdoc</code>也被各个代码托管平台直接像<code>HTML</code>那样展示。<br><code>RDoc</code>可以生成<code>HTML</code>，<code>Ruby</code>自带<code>rdoc</code>命令，而且可以像<code>javadoc</code>那样，生成整个项目的在线API文档。<br>不过国人用Ruby的是不是少呀？    </p>
+<h2 id="RedCloth-textile"><a href="#RedCloth-textile" class="headerlink" title="RedCloth(*.textile)"></a><a href="http://redcloth.org/textile" target="_blank" rel="external">RedCloth(*.textile)</a></h2><p>&nbsp;&nbsp;<code>textile</code>也是<code>Ruby</code>系的标记语言文本。由<a href="https://github.com/jgarber/redcloth" target="_blank" rel="external">RedCloth</a>模块处理。<br>它的语法同样很简洁，在各个平台上<code>*.textile</code>也可以直接以<code>HTML</code>预览。现在<code>textile</code>也被应用到了其他编程语言项目。<br>不过这后缀名太长了。    </p>
+<h2 id="YAML-yml"><a href="#YAML-yml" class="headerlink" title="YAML(*.yml)"></a><a href="http://www.yaml.org/" target="_blank" rel="external">YAML(*.yml)</a></h2><p>&nbsp;&nbsp;<code>YAML</code>(<em>YAML Ain’t Markup Language</em>)<code>YAML</code>不是标记语言，但是它以ML结尾所以列出来了学习一下。<br><code>YAML</code>生下来是作为一种所有编程语言友好的数据序列化标准的，也用于项目配置文件，如<a href="http://docs.docker.com/compose/overview/" target="_blank" rel="external">docker</a>，<a href="http://swagger.io/swagger-editor/" target="_blank" rel="external">swagger</a>，<a href="http://hexo.io/docs/configuration.html" target="_blank" rel="external">hexo</a>。<br>顺便提一下<a href="http://json.org/" target="_blank" rel="external"><strong>JSON</strong></a>，<code>JSON</code>也用于数据序列化和配置文件。语法格式上<code>YAML</code>取决于代码块缩进，而<code>JSON</code>由’{‘,’}’来区分。    </p>
+<hr>
+<p>&nbsp;&nbsp;平时编程常用的就是上面这几个(虽然YAML不算，但也很常用)，还有其他的如<code>SGML</code>，<code>VRML</code>，<code>WML</code>，<code>DocBook</code>，<code>LaTeX</code>，<code>OPML</code>等等太多了。有些或已过时，有些正在制定标准，各种场景又有不同格式的标记文本…    </p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p><a href="http://pandao.github.io/editor.md/" target="_blank" rel="external"><code>Editor.md</code></a>: Markdown在线编辑器<br><a href="http://www.pandoc.org/" target="_blank" rel="external"><code>Pandoc</code></a>: 支持多种格式互转<br><a href="http://docutils.sourceforge.net/" target="_blank" rel="external"><code>docutils</code></a>: 把<code>reStructuredText</code>转换成其他格式<br><a href="http://redcloth.org/" target="_blank" rel="external"><code>RedCloth</code></a>: 把textile转成html<br><code>Chrome</code>、<code>Atom</code>、<code>Idea</code>、<code>Sublime</code>都有相应的插件。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;nbsp;&amp;nbsp;现在很流行的标记语言文本要数&lt;a href=&quot;http://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt;(*.md)了，其实它的出现是为了更方便的读写，然后转换为我们更熟知的&lt;a href=&quot;http://www.w3.org/TR/html40/&quot;&gt;HTML&lt;/a&gt; (&lt;em&gt;HyperText Markup Language&lt;/em&gt;)。&lt;code&gt;HTML&lt;/code&gt;就是一种标记语言，&lt;a href=&quot;http://opendocument.xml.org/&quot;&gt;XML&lt;/a&gt; (&lt;em&gt;eXtensible Markup Language&lt;/em&gt;)也是，它们都是Mark&lt;strong&gt;&lt;code&gt;UP&lt;/code&gt;&lt;/strong&gt;(标记上)，而&lt;code&gt;Markdown&lt;/code&gt;是Mark&lt;strong&gt;&lt;code&gt;DOWN&lt;/code&gt;&lt;/strong&gt;(标记下)。&lt;br&gt;&amp;nbsp;&amp;nbsp;为了便于读写、或者数据交换，人类已经造出了很多标记语言文本，简单学习几个，具体语法使用某度和某哥会给出来一堆；&lt;code&gt;HTML&lt;/code&gt;和&lt;code&gt;XML&lt;/code&gt;就不说了。    &lt;/p&gt;
+&lt;h2 id=&quot;Markdown-md&quot;&gt;&lt;a href=&quot;#Markdown-md&quot; class=&quot;headerlink&quot; title=&quot;Markdown(*.md)&quot;&gt;&lt;/a&gt;&lt;a href=&quot;http://daringfireball.net/projects/markdown/&quot;&gt;Markdown(*.md)&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;应用于代码库的&lt;code&gt;Readme.md&lt;/code&gt;文件，帮助文档等等各种场景。&lt;br&gt;&lt;code&gt;Markdown&lt;/code&gt;很简洁，特别易于读写，可以称得上是最轻量级的了。但是语法有些不统一，尤其各家工具处理缩进和换行时不一样。&lt;br&gt;优点明显大于缺点，大家都在向&lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;看齐吧。    &lt;/p&gt;
+    
+    </summary>
+    
+      <category term="开源工具" scheme="https://liumengjun.github.io/categories/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="Markdown" scheme="https://liumengjun.github.io/tags/Markdown/"/>
+    
+      <category term="reStructuredText" scheme="https://liumengjun.github.io/tags/reStructuredText/"/>
+    
+      <category term="RDoc" scheme="https://liumengjun.github.io/tags/RDoc/"/>
+    
+      <category term="textile" scheme="https://liumengjun.github.io/tags/textile/"/>
+    
+      <category term="YAML" scheme="https://liumengjun.github.io/tags/YAML/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hello Hexo</title>
     <link href="https://liumengjun.github.io/2016/12/15/hello-hexo.html"/>
     <id>https://liumengjun.github.io/2016/12/15/hello-hexo.html</id>
     <published>2016-12-15T12:46:25.000Z</published>
-    <updated>2016-12-17T12:07:32.000Z</updated>
+    <updated>2016-12-19T18:04:18.000Z</updated>
     
     <content type="html"><![CDATA[<p>计划搭建个人博客，用了下面提到的框架，这是自动生成的文章 (尊重原创，没有删除，不是广告哟)</p>
 <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a><br><a id="more"></a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
@@ -37,7 +78,9 @@
     <summary type="html">
     
       &lt;p&gt;计划搭建个人博客，用了下面提到的框架，这是自动生成的文章 (尊重原创，没有删除，不是广告哟)&lt;/p&gt;
-&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This
+&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot;&gt;Writing&lt;/a&gt;&lt;br&gt;
     
     </summary>
     
@@ -55,7 +98,7 @@
     <link href="https://liumengjun.github.io/2016/11/15/tricks-gh.html"/>
     <id>https://liumengjun.github.io/2016/11/15/tricks-gh.html</id>
     <published>2016-11-15T12:46:25.000Z</published>
-    <updated>2016-12-17T17:50:03.000Z</updated>
+    <updated>2016-12-19T18:04:40.000Z</updated>
     
     <content type="html"><![CDATA[<p><strong>预览html</strong></p>
 <ul>
@@ -64,6 +107,7 @@
 <p><strong>raw文件</strong></p>
 <ul>
 <li><p>raw.githubusercontent.com<br>e.g. <a href="https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk" target="_blank" rel="external">https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk</a></p>
+<a id="more"></a>
 </li>
 <li><p>?raw=true<br>e.g. <a href="https://github.com/liumengjun/SudokuPuzzle/blob/master/SudokuPuzzle.apk?raw=true" target="_blank" rel="external">https://github.com/liumengjun/SudokuPuzzle/blob/master/SudokuPuzzle.apk?raw=true</a></p>
 </li>
@@ -83,7 +127,11 @@
     
       &lt;p&gt;&lt;strong&gt;预览html&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://htmlpreview.github.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://htmlpreview.github.i
+&lt;li&gt;&lt;a href=&quot;https://htmlpreview.github.io/&quot;&gt;https://htmlpreview.github.io/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;raw文件&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;raw.githubusercontent.com&lt;br&gt;e.g. &lt;a href=&quot;https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk&quot;&gt;https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
