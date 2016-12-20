@@ -686,18 +686,14 @@ a.article-title:hover {
 .article-more-link a {
   display: inline-block;
   line-height: 1em;
-  padding: 6px 15px;
-  border-radius: 15px;
-  background: #eeefef;
   color: #999;
-  text-shadow: 0 1px #fff;
+  text-shadow: 0 1px #eff;
   text-decoration: none;
 }
 .article-more-link a:hover {
-  background: #258fb8;
-  color: #fff;
+  color: #258fb8;
   text-decoration: none;
-  text-shadow: 0 1px #1e7293;
+  text-shadow: 0 1px #dff;
 }
 .article-footer {
   font-size: 0.85em;
@@ -1132,6 +1128,9 @@ a.article-title:hover {
   padding: 50px 0;
   border-top: 1px solid #ddd;
   color: #999;
+  line-height: 1.6em;
+  font-size: 0.85em;
+  text-align: center;
 }
 #footer a {
   color: #258fb8;
@@ -1140,9 +1139,29 @@ a.article-title:hover {
 #footer a:hover {
   text-decoration: underline;
 }
-#footer-info {
-  line-height: 1.6em;
-  font-size: 0.85em;
+#footer img {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+}
+#footer-info-left {
+  float: left;
+}
+@media screen and (max-width: 479px) {
+  #footer-info-left {
+    float: none;
+  }
+}
+#footer-info-right {
+  float: right;
+}
+@media screen and (max-width: 479px) {
+  #footer-info-right {
+    float: none;
+  }
+}
+#footer-info-right a {
+  margin-left: 3px;
 }
 .article-entry pre,
 .article-entry .highlight {
