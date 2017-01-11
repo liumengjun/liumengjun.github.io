@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https://liumengjun.github.io/2016/11/15/tricks-gh.html</loc>
+    <lastmod>2017-01-11T15:26:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>一些github使用技巧</title>
+        <pubTime>2016-11-15T12:46:25.000Z</pubTime>
+        
+        <tag>github</tag>
+         
+        <tag>git</tag>
+         
+         
+           
+             
+              <breadCrumb title="开源工具" url="https://liumengjun.github.io/categories/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://liumengjun.github.io/2016/12/15/hello-hexo.html</loc>
     <lastmod>2016-12-20T15:22:22.000Z</lastmod>
     <data>
@@ -42,28 +64,6 @@
         <tag>textile</tag>
          
         <tag>YAML</tag>
-         
-         
-           
-             
-              <breadCrumb title="开源工具" url="https://liumengjun.github.io/categories/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://liumengjun.github.io/2016/11/15/tricks-gh.html</loc>
-    <lastmod>2016-12-20T15:21:45.000Z</lastmod>
-    <data>
-        <display>
-        <title>一些github使用技巧</title>
-        <pubTime>2016-11-15T12:46:25.000Z</pubTime>
-        
-        <tag>github</tag>
-         
-        <tag>git</tag>
          
          
            

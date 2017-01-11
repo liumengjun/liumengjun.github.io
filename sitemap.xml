@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://liumengjun.github.io/2016/11/15/tricks-gh.html</loc>
+    
+    <lastmod>2017-01-11T15:26:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://liumengjun.github.io/2016/12/15/hello-hexo.html</loc>
     
     <lastmod>2016-12-20T15:22:22.000Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://liumengjun.github.io/2016/12/19/markup-text.html</loc>
     
     <lastmod>2016-12-20T15:21:59.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://liumengjun.github.io/2016/11/15/tricks-gh.html</loc>
-    
-    <lastmod>2016-12-20T15:21:45.000Z</lastmod>
     
   </url>
   

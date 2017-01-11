@@ -6,32 +6,26 @@
   <title>一些github使用技巧 | Simple Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="预览html
-
 https://htmlpreview.github.io/
 
 raw文件
-
 raw.githubusercontent.come.g. https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些github使用技巧">
 <meta property="og:url" content="https://liumengjun.github.io/2016/11/15/tricks-gh.html">
 <meta property="og:site_name" content="Simple Space">
 <meta property="og:description" content="预览html
-
 https://htmlpreview.github.io/
 
 raw文件
-
 raw.githubusercontent.come.g. https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk">
-<meta property="og:updated_time" content="2016-12-20T15:21:45.000Z">
+<meta property="og:updated_time" content="2017-01-11T15:26:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些github使用技巧">
 <meta name="twitter:description" content="预览html
-
 https://htmlpreview.github.io/
 
 raw文件
-
 raw.githubusercontent.come.g. https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk">
   
     <link rel="alternate" href="/atom.xml" title="Simple Space" type="application/atom+xml">
@@ -173,25 +167,49 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>预览html</strong></p>
-<ul>
+        <h3 id="预览html"><a href="#预览html" class="headerlink" title="预览html"></a>预览html</h3><ul>
 <li><a href="https://htmlpreview.github.io/" target="_blank" rel="external">https://htmlpreview.github.io/</a></li>
 </ul>
-<p><strong>raw文件</strong></p>
-<ul>
+<h3 id="raw文件"><a href="#raw文件" class="headerlink" title="raw文件"></a>raw文件</h3><ul>
 <li>raw.githubusercontent.com<br>e.g. <a href="https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk" target="_blank" rel="external">https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk</a></li>
 </ul>
 <a id="more"></a>
 <ul>
 <li>?raw=true<br>e.g. <a href="https://github.com/liumengjun/SudokuPuzzle/blob/master/SudokuPuzzle.apk?raw=true" target="_blank" rel="external">https://github.com/liumengjun/SudokuPuzzle/blob/master/SudokuPuzzle.apk?raw=true</a></li>
 </ul>
-<p><strong>删除敏感数据</strong></p>
-<ul>
+<h3 id="打包下载"><a href="#打包下载" class="headerlink" title="打包下载"></a>打包下载</h3><p>归档链接 <code>github.com/repos/:owner/:repo/:archive_format/:ref</code> <a href="https://developer.github.com/v3/repos/contents/#get-archive-link" target="_blank" rel="external">@see GitHub API</a></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>owner</code></td>
+<td>GitHub用户名</td>
+</tr>
+<tr>
+<td><code>repo</code></td>
+<td>项目名</td>
+</tr>
+<tr>
+<td><code>archive_format</code></td>
+<td>tarball 或 zipball</td>
+</tr>
+<tr>
+<td><code>ref</code></td>
+<td>有效的Git引用，branch、tag、commit</td>
+</tr>
+</tbody>
+</table>
+<p>例如：<br><a href="https://github.com/liumengjun/liumengjun.github.io/tarball/master" target="_blank" rel="external">https://github.com/liumengjun/liumengjun.github.io/tarball/master</a><br><a href="https://github.com/liumengjun/liumengjun.github.io/zipball/b16ffbcb8" target="_blank" rel="external">https://github.com/liumengjun/liumengjun.github.io/zipball/b16ffbcb8</a>    </p>
+<h3 id="删除敏感数据"><a href="#删除敏感数据" class="headerlink" title="删除敏感数据"></a>删除敏感数据</h3><ul>
 <li>use <a href="https://rtyley.github.io/bfg-repo-cleaner/" target="_blank" rel="external">bfg</a> or <a href="https://git-scm.com/docs/git-filter-branch" target="_blank" rel="external">git-filter-branch</a>. <a href="https://help.github.com/articles/remove-sensitive-data/" target="_blank" rel="external">@see help doc</a></li>
 <li>git-rebase -i 修改历史commit点然后提交（commit较多时不方便）</li>
 </ul>
-<p><strong>GitHub Pages</strong></p>
-<ul>
+<h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><ul>
 <li>create a repo named ${your_username}.github.io. <a href="https://pages.github.com/" target="_blank" rel="external">more&gt;&gt;</a></li>
 </ul>
 
@@ -332,7 +350,7 @@ ga('send', 'pageview');
   
   <div class="outer">
     <div id="footer-info-left">
-      &copy; 2016 Mengjun Liu.
+      &copy; 2017 Mengjun Liu.
       &nbsp;Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
     <a href="/"><img src="/favicon.png" /></a>
