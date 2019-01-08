@@ -7,3 +7,5 @@
 
 
 NOTE: source codes of Hexo project are in branch ``hexo-gh-blog``.
+
+***DO NOT ALLOW PRIVATE***
