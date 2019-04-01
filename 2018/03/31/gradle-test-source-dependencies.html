@@ -3,18 +3,20 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>归档: 2016/12 | Simple Space</title>
+  <title>Gradle 跨模块依赖测试代码 | Simple Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simple Space">
-<meta property="og:url" content="https://liumengjun.github.io/archives/2016/12/index.html">
+  <meta name="description" content="gradle中，模块A依赖core模块的测试代码测试代码(test文件夹下的代码)，是不跟随打包发布的，而且默认不随project依赖传递到其他的模块，需要用.sourceSets.test.output指明 简单配置，如下：123456// A&apos;s build.gradledependencies &amp;#123;    compile project(&apos;:core&apos;)    //...">
+<meta name="keywords" content="Gradle,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradle 跨模块依赖测试代码">
+<meta property="og:url" content="https://liumengjun.github.io/2018/03/31/gradle-test-source-dependencies.html">
 <meta property="og:site_name" content="Simple Space">
-<meta property="og:description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
+<meta property="og:description" content="gradle中，模块A依赖core模块的测试代码测试代码(test文件夹下的代码)，是不跟随打包发布的，而且默认不随project依赖传递到其他的模块，需要用.sourceSets.test.output指明 简单配置，如下：123456// A&apos;s build.gradledependencies &amp;#123;    compile project(&apos;:core&apos;)    //...">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-01T15:04:04.033Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simple Space">
-<meta name="twitter:description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
+<meta name="twitter:title" content="Gradle 跨模块依赖测试代码">
+<meta name="twitter:description" content="gradle中，模块A依赖core模块的测试代码测试代码(test文件夹下的代码)，是不跟随打包发布的，而且默认不随project依赖传递到其他的模块，需要用.sourceSets.test.output指明 简单配置，如下：123456// A&apos;s build.gradledependencies &amp;#123;    compile project(&apos;:core&apos;)    //...">
   
     <link rel="alternate" href="/atom.xml" title="Simple Space" type="application/atom+xml">
   
@@ -123,58 +125,76 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/19/markup-text.html" class="archive-article-date">
-  <time datetime="2016-12-19T12:27:10.000Z" itemprop="datePublished">12月 19</time>
+        <section id="main"><article id="post-gradle-test-source-dependencies" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/31/gradle-test-source-dependencies.html" class="article-date">
+  <time datetime="2018-03-31T15:00:00.000Z" itemprop="datePublished">2018-03-31</time>
 </a>
-      
+    
+  <div class="article-category">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    <a class="article-category-link" href="/categories/构建工具/">构建工具</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/19/markup-text.html">标记语言文本学习</a>
+    <h1 class="article-title" itemprop="name">
+      Gradle 跨模块依赖测试代码
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/15/hello-hexo.html" class="archive-article-date">
-  <time datetime="2016-12-15T12:46:25.000Z" itemprop="datePublished">12月 15</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/15/hello-hexo.html">Hello Hexo</a>
-    </h1>
-  
+        <h3 id="gradle中，模块A依赖core模块的测试代码"><a href="#gradle中，模块A依赖core模块的测试代码" class="headerlink" title="gradle中，模块A依赖core模块的测试代码"></a>gradle中，模块A依赖core模块的测试代码</h3><p>测试代码(test文件夹下的代码)，是不跟随打包发布的，而且默认不随project依赖传递到其他的模块，需要用<code>.sourceSets.test.output</code>指明</p>
+<h4 id="简单配置，如下："><a href="#简单配置，如下：" class="headerlink" title="简单配置，如下："></a>简单配置，如下：</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A's build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':core'</span>)</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    testCompile <span class="keyword">project</span>(<span class="string">':core'</span>).<span class="keyword">sourceSets</span>.test.output</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="或者，configuration-of-testOutput"><a href="#或者，configuration-of-testOutput" class="headerlink" title="或者，configuration of testOutput"></a>或者，configuration of testOutput</h4><p>以上只是简单的配置，也可以配置一个testOutput configuration，具体如下：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// core's build.gradle</span></span><br><span class="line"><span class="keyword">configurations</span> &#123;</span><br><span class="line">    testOutput</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    testOutput <span class="keyword">sourceSets</span>.test.output</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A's build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    testCompile <span class="keyword">project</span>(path: <span class="string">':core'</span>, configuration: <span class="string">'testOutput'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
+<li><a href="https://softnoise.wordpress.com/2014/09/07/gradle-sub-project-test-dependencies-in-multi-project-builds/" target="_blank" rel="noopener">Gradle: sub-project test dependencies in multi-project builds</a></li>
+</ul>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://liumengjun.github.io/2018/03/31/gradle-test-source-dependencies.html" data-id="cjtyhbcip00074qjwtm1v4afy" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/24/git-sparse-checkout.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">较新</strong>
+      <div class="article-nav-title">
+        
+          git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/30/gradle-execute-main-class.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">较旧</strong>
+      <div class="article-nav-title">关于 Gradle 执行 main-class</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Simple Space</title>
+  
   <subtitle>这片世界是持有更高级文明的生命体创造的小宇宙</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liumengjun.github.io/"/>
-  <updated>2016-12-20T15:21:59.000Z</updated>
+  <updated>2019-04-01T15:17:54.695Z</updated>
   <id>https://liumengjun.github.io/</id>
   
   <author>
@@ -16,23 +17,121 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>git stash clear 后，找回 stash 的代码</title>
+    <link href="https://liumengjun.github.io/2019/01/15/recover-after-git-stash-clear.html"/>
+    <id>https://liumengjun.github.io/2019/01/15/recover-after-git-stash-clear.html</id>
+    <published>2019-01-15T13:32:21.000Z</published>
+    <updated>2019-04-01T15:17:54.695Z</updated>
+    
+    <content type="html"><![CDATA[<!-- # git stash clear 后，找回 stash 的代码 --><p>使用<code>git stash</code>隐藏工作区内修改但未提交的代码，<code>git stash list</code>查看<code>stash</code>的历史记录，<code>git stash clear</code>清除所有的stash栈。</p><p>有时候可能不小心<code>git stash clear</code>掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fsck --no-reflogs 2&gt;&amp;1 | awk <span class="string">'/dangling commit/ &#123;print $3&#125;'</span> | xargs git show --<span class="built_in">stat</span></span><br></pre></td></tr></table></figure><p>上述命令得到了所有dangling commit，其描述，以及修改的文件列表。观察一下，<code>stash</code>记录描述以<code>WIP</code>开头（work in progress缩写，进行中的工作），结合修改文件列表就能找到那个commit了。</p><p>然后执行<code>git cherry-pick</code>或者<code>git stash apply</code>命令就可以恢复了，参数是那个commit id。</p><h4 id="解析："><a href="#解析：" class="headerlink" title="解析："></a><strong>解析</strong>：</h4><ul><li><code>git fsck</code>找出所有dangling的对象，也可以不加<code>--no-reflogs</code>参数。<code>2&gt;&amp;1</code>为了隐藏烦人的错误输出，可不加。  </li><li><code>awk</code>过滤commit类型，并输出commit id值  </li><li><code>xargs git show --stat</code>对所有commit_id执行<code>git show --stat</code>命令  </li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- # git stash clear 后，找回 stash 的代码 --&gt;
+&lt;p&gt;使用&lt;code&gt;git stash&lt;/code&gt;隐藏工作区内修改但未提交的代码，&lt;code&gt;git stash list&lt;/code&gt;查看&lt;code&gt;stash&lt;/code&gt;的历史记录，&lt;c
+      
+    
+    </summary>
+    
+      <category term="代码管理" scheme="https://liumengjun.github.io/categories/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="git" scheme="https://liumengjun.github.io/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录)</title>
+    <link href="https://liumengjun.github.io/2018/09/24/git-sparse-checkout.html"/>
+    <id>https://liumengjun.github.io/2018/09/24/git-sparse-checkout.html</id>
+    <published>2018-09-24T15:31:17.000Z</published>
+    <updated>2019-04-01T15:11:48.688Z</updated>
+    
+    <content type="html"><![CDATA[<!-- # git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录) --><p>对比svn，svn可以更新或下载特定目录(甚至精确控制每个目录权限)，可是git不可以吗？在Git1.7.0以前，这无法实现，但是幸运的是在Git1.7.0以后加入了Sparse Checkout（直译为：稀疏检出）模式，这使得Check Out指定文件或者目录成为可能。操作如下：</p><h3 id="对于已有项目"><a href="#对于已有项目" class="headerlink" title="对于已有项目"></a>对于已有项目</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使能Sparse Checkout(稀疏检出)</span></span><br><span class="line">git config core.sparsecheckout <span class="literal">true</span></span><br><span class="line"><span class="comment"># 编辑'.git/info/sparse-checkout'，规则类似gitignore。比如</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'</span></span><br><span class="line"><span class="string">/src</span></span><br><span class="line"><span class="string">readme.md</span></span><br><span class="line"><span class="string">'</span> &gt; .git/info/sparse-checkout</span><br><span class="line"><span class="comment"># 只保留根目录下/src目录和readme.md文件</span></span><br><span class="line">git checkout</span><br><span class="line"><span class="comment"># ls，就可以看到内容已经变了，只有src和readme.md两项</span></span><br></pre></td></tr></table></figure><h3 id="对于新项目"><a href="#对于新项目" class="headerlink" title="对于新项目"></a>对于新项目</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git init newdir &amp;&amp; <span class="built_in">cd</span> newdir</span><br><span class="line"><span class="comment"># 使能Sparse Checkout(稀疏检出)</span></span><br><span class="line">git config core.sparsecheckout <span class="literal">true</span></span><br><span class="line"><span class="comment"># 编辑'.git/info/sparse-checkout'，具体略</span></span><br><span class="line">git remote add origin git@github.com:yourname/yourrepo.git</span><br><span class="line"><span class="comment"># 下载</span></span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- # git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录) --&gt;
+&lt;p&gt;对比svn，svn可以更新或下载特定目录(甚至精确控制每个目录权限)，可是git不可以吗？在Git1.7.0以前，这无法实现，但是幸运的是在Git1.7.0以后加入了Spa
+      
+    
+    </summary>
+    
+      <category term="代码管理" scheme="https://liumengjun.github.io/categories/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="git" scheme="https://liumengjun.github.io/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Gradle 跨模块依赖测试代码</title>
+    <link href="https://liumengjun.github.io/2018/03/31/gradle-test-source-dependencies.html"/>
+    <id>https://liumengjun.github.io/2018/03/31/gradle-test-source-dependencies.html</id>
+    <published>2018-03-31T15:00:00.000Z</published>
+    <updated>2019-04-01T15:04:04.033Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="gradle中，模块A依赖core模块的测试代码"><a href="#gradle中，模块A依赖core模块的测试代码" class="headerlink" title="gradle中，模块A依赖core模块的测试代码"></a>gradle中，模块A依赖core模块的测试代码</h3><p>测试代码(test文件夹下的代码)，是不跟随打包发布的，而且默认不随project依赖传递到其他的模块，需要用<code>.sourceSets.test.output</code>指明</p><h4 id="简单配置，如下："><a href="#简单配置，如下：" class="headerlink" title="简单配置，如下："></a>简单配置，如下：</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A's build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':core'</span>)</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    testCompile <span class="keyword">project</span>(<span class="string">':core'</span>).<span class="keyword">sourceSets</span>.test.output</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="或者，configuration-of-testOutput"><a href="#或者，configuration-of-testOutput" class="headerlink" title="或者，configuration of testOutput"></a>或者，configuration of testOutput</h4><p>以上只是简单的配置，也可以配置一个testOutput configuration，具体如下：</p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// core's build.gradle</span></span><br><span class="line"><span class="keyword">configurations</span> &#123;</span><br><span class="line">    testOutput</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    testOutput <span class="keyword">sourceSets</span>.test.output</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后</p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A's build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    testCompile <span class="keyword">project</span>(path: <span class="string">':core'</span>, configuration: <span class="string">'testOutput'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><ul><li><a href="https://softnoise.wordpress.com/2014/09/07/gradle-sub-project-test-dependencies-in-multi-project-builds/" target="_blank" rel="noopener">Gradle: sub-project test dependencies in multi-project builds</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;gradle中，模块A依赖core模块的测试代码&quot;&gt;&lt;a href=&quot;#gradle中，模块A依赖core模块的测试代码&quot; class=&quot;headerlink&quot; title=&quot;gradle中，模块A依赖core模块的测试代码&quot;&gt;&lt;/a&gt;gradle中，模块A依
+      
+    
+    </summary>
+    
+      <category term="构建工具" scheme="https://liumengjun.github.io/categories/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="Gradle" scheme="https://liumengjun.github.io/tags/Gradle/"/>
+    
+      <category term="java" scheme="https://liumengjun.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于 Gradle 执行 main-class</title>
+    <link href="https://liumengjun.github.io/2018/03/30/gradle-execute-main-class.html"/>
+    <id>https://liumengjun.github.io/2018/03/30/gradle-execute-main-class.html</id>
+    <published>2018-03-30T13:04:04.000Z</published>
+    <updated>2019-04-01T15:01:11.908Z</updated>
+    
+    <content type="html"><![CDATA[<!-- ### 关于gradle执行main-class --><p><code>用application插件，或使用JavaExec任务</code></p><h4 id="传递jvm-option用jvmArgs属性，示例如下："><a href="#传递jvm-option用jvmArgs属性，示例如下：" class="headerlink" title="传递jvm option用jvmArgs属性，示例如下："></a>传递jvm option用<code>jvmArgs</code>属性，示例如下：</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">task</span> execute(type:JavaExec) &#123;</span><br><span class="line">    <span class="comment">//only for projects do not have "main" classes but use default starters</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">project</span>.hasProperty(<span class="string">'mainClassName'</span>)) &#123;</span><br><span class="line">        main = mainClassName</span><br><span class="line">        <span class="keyword">classpath</span> = <span class="keyword">sourceSets</span>.main.runtimeClasspath</span><br><span class="line">        jvmArgs = [<span class="string">"-agentlib:jdwp=transport=dt_socket,address=31843,suspend=n,server=y"</span>, <span class="string">"-Dgreeting=hello"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="调试gradle启动的程序："><a href="#调试gradle启动的程序：" class="headerlink" title="调试gradle启动的程序："></a>调试gradle启动的程序：</h4><p><code>GRADLE_OPTS</code>环境变量只是把给定的参数传递给<code>gradle</code>，没有传递给要执行的<code>main-class</code>。比如要调试程序，用<code>GRADLE_OPTS</code>是没用的，我们不调试<code>gradle</code>，我们需要调试的是<code>main-class</code>，故需要用<code>jvmArgs</code>。</p><h4 id="两个参考链接"><a href="#两个参考链接" class="headerlink" title="两个参考链接"></a>两个参考链接</h4><ul><li><p>(1) <a href="https://docs.gradle.org/current/userguide/application_plugin.html" target="_blank" rel="noopener">The Application Plugin - Gradle User Manual</a></p></li><li><p>(2) <a href="https://stackoverflow.com/questions/21358466/gradle-to-execute-java-class-without-modifying-build-gradle" target="_blank" rel="noopener">Gradle to execute Java class (without modifying build.gradle) - Stack Overflow</a></p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- ### 关于gradle执行main-class --&gt;
+&lt;p&gt;&lt;code&gt;用application插件，或使用JavaExec任务&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&quot;传递jvm-option用jvmArgs属性，示例如下：&quot;&gt;&lt;a href=&quot;#传递jvm-opt
+      
+    
+    </summary>
+    
+      <category term="构建工具" scheme="https://liumengjun.github.io/categories/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="Gradle" scheme="https://liumengjun.github.io/tags/Gradle/"/>
+    
+      <category term="java" scheme="https://liumengjun.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>标记语言文本学习</title>
     <link href="https://liumengjun.github.io/2016/12/19/markup-text.html"/>
     <id>https://liumengjun.github.io/2016/12/19/markup-text.html</id>
     <published>2016-12-19T12:27:10.000Z</published>
     <updated>2016-12-20T15:21:59.000Z</updated>
     
-    <content type="html"><![CDATA[<p>&nbsp;&nbsp;现在最流行的标记语言文本要数<a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="external">Markdown</a>(*.md)了，其实它的出现是为了更方便的读写，然后转换为我们更熟知的<a href="http://www.w3.org/TR/html40/" target="_blank" rel="external">HTML</a> (<em>HyperText Markup Language</em>)。<code>HTML</code>就是一种标记语言，<a href="http://opendocument.xml.org/" target="_blank" rel="external">XML</a> (<em>eXtensible Markup Language</em>)也是，它们都是Mark<strong><code>UP</code></strong>(标记上)，而<code>Markdown</code>是Mark<strong><code>DOWN</code></strong>(标记下)。<br>&nbsp;&nbsp;为了便于读写、或者数据交换，人类已经造出了很多标记语言文本，简单学习几个，具体语法使用某度和某哥会给出来一堆；<code>HTML</code>和<code>XML</code>就不说了。    </p>
-<h2 id="Markdown-md"><a href="#Markdown-md" class="headerlink" title="Markdown(*.md)"></a><a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="external">Markdown(*.md)</a></h2><p>&nbsp;&nbsp;应用于代码库的<code>Readme.md</code>文件，帮助文档等等各种场景。<br><code>Markdown</code>很简洁，特别易于读写，可以称得上是最轻量级的了。但是语法有些不统一，尤其各家工具处理缩进和换行时不一样。<br>优点明显大于缺点，大家都在向<a href="https://help.github.com/articles/github-flavored-markdown" target="_blank" rel="external">GitHub GFM</a>看齐吧。    </p>
-<a id="more"></a>
-<h2 id="reStructuredText-rst"><a href="#reStructuredText-rst" class="headerlink" title="reStructuredText(*.rst)"></a><a href="http://docutils.sourceforge.net/rst.html" target="_blank" rel="external">reStructuredText(*.rst)</a></h2><p>&nbsp;&nbsp;<a href="http://www.python.org" target="_blank" rel="external">Python</a>文档使用较多，写个<code>Readme.rst</code>也是没问题的，<a href="https://github.com" target="_blank" rel="external">GitHub</a>也可以直接渲染<code>rst</code>成<code>HTML</code>预览。<br><code>rst</code>语法很规范，对比<code>Markdown</code>有些语法相似，稍微复杂一点点。<a href="http://pypi.python.org/" target="_blank" rel="external">Python Package</a>的标准文档格式，起初还创建了一个工具<a href="http://www.sphinx-doc.org/" target="_blank" rel="external">Sphinx</a>来处理<code>Python</code>文档。<br>其实使用<code>rst</code>的也是大有人在。    </p>
-<h2 id="RubyDoc-rdoc"><a href="#RubyDoc-rdoc" class="headerlink" title="RubyDoc(*.rdoc)"></a><a href="https://rdoc.github.io/rdoc/" target="_blank" rel="external">RubyDoc(*.rdoc)</a></h2><p>&nbsp;&nbsp;<a href="http://www.ruby-lang.org/" target="_blank" rel="external">Ruby</a>项目的文档系统。<code>*.rdoc</code>也被各个代码托管平台直接像<code>HTML</code>那样展示。<br><code>RDoc</code>可以生成<code>HTML</code>，<code>Ruby</code>自带<code>rdoc</code>命令，而且可以像<code>javadoc</code>那样，生成整个项目的在线API文档。<br>不过国人用Ruby的是不是少呀？    </p>
-<h2 id="RedCloth-textile"><a href="#RedCloth-textile" class="headerlink" title="RedCloth(*.textile)"></a><a href="http://redcloth.org/textile" target="_blank" rel="external">RedCloth(*.textile)</a></h2><p>&nbsp;&nbsp;<code>textile</code>也是<code>Ruby</code>系的标记语言文本。由<a href="https://github.com/jgarber/redcloth" target="_blank" rel="external">RedCloth</a>模块处理。<br>它的语法同样很简洁，在各个平台上<code>*.textile</code>也可以直接以<code>HTML</code>预览。现在<code>textile</code>也被应用到了其他编程语言项目。<br>不过这后缀名太长了。    </p>
-<h2 id="YAML-yml"><a href="#YAML-yml" class="headerlink" title="YAML(*.yml)"></a><a href="http://www.yaml.org/" target="_blank" rel="external">YAML(*.yml)</a></h2><p>&nbsp;&nbsp;<code>YAML</code>(<em>YAML Ain’t Markup Language</em>)<code>YAML</code>不是标记语言，但是它以ML结尾所以列出来了学习一下。<br><code>YAML</code>生下来是作为一种所有编程语言友好的数据序列化标准的，也用于项目配置文件，如<a href="http://docs.docker.com/compose/overview/" target="_blank" rel="external">docker</a>，<a href="http://swagger.io/swagger-editor/" target="_blank" rel="external">swagger</a>，<a href="http://hexo.io/docs/configuration.html" target="_blank" rel="external">hexo</a>。<br>顺便提一下<a href="http://json.org/" target="_blank" rel="external"><strong>JSON</strong></a>，<code>JSON</code>也用于数据序列化和配置文件。语法格式上<code>YAML</code>取决于代码块缩进，而<code>JSON</code>由’{‘,’}’来区分。    </p>
-<hr>
-<p>&nbsp;&nbsp;平时编程常用的就是上面这几个(虽然YAML不算，但也很常用)，还有其他的如<code>SGML</code>，<code>VRML</code>，<code>WML</code>，<code>DocBook</code>，<code>LaTeX</code>，<code>OPML</code>等等太多了。有些或已过时，有些正在制定标准，各种场景又有不同格式的标记文本…    </p>
-<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p><a href="http://pandao.github.io/editor.md/" target="_blank" rel="external"><code>Editor.md</code></a>: Markdown在线编辑器<br><a href="http://www.pandoc.org/" target="_blank" rel="external"><code>Pandoc</code></a>: 支持多种格式互转<br><a href="http://docutils.sourceforge.net/" target="_blank" rel="external"><code>docutils</code></a>: 把<code>reStructuredText</code>转换成其他格式<br><a href="http://redcloth.org/" target="_blank" rel="external"><code>RedCloth</code></a>: 把textile转成html<br><code>Chrome</code>、<code>Atom</code>、<code>Idea</code>、<code>Sublime</code>都有相应的插件。</p>
-]]></content>
+    <content type="html"><![CDATA[<p>&nbsp;&nbsp;现在最流行的标记语言文本要数<a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="external">Markdown</a>(*.md)了，其实它的出现是为了更方便的读写，然后转换为我们更熟知的<a href="http://www.w3.org/TR/html40/" target="_blank" rel="external">HTML</a> (<em>HyperText Markup Language</em>)。<code>HTML</code>就是一种标记语言，<a href="http://opendocument.xml.org/" target="_blank" rel="external">XML</a> (<em>eXtensible Markup Language</em>)也是，它们都是Mark<strong><code>UP</code></strong>(标记上)，而<code>Markdown</code>是Mark<strong><code>DOWN</code></strong>(标记下)。<br>&nbsp;&nbsp;为了便于读写、或者数据交换，人类已经造出了很多标记语言文本，简单学习几个，具体语法使用某度和某哥会给出来一堆；<code>HTML</code>和<code>XML</code>就不说了。    </p><h2 id="Markdown-md"><a href="#Markdown-md" class="headerlink" title="Markdown(*.md)"></a><a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="external">Markdown(*.md)</a></h2><p>&nbsp;&nbsp;应用于代码库的<code>Readme.md</code>文件，帮助文档等等各种场景。<br><code>Markdown</code>很简洁，特别易于读写，可以称得上是最轻量级的了。但是语法有些不统一，尤其各家工具处理缩进和换行时不一样。<br>优点明显大于缺点，大家都在向<a href="https://help.github.com/articles/github-flavored-markdown" target="_blank" rel="external">GitHub GFM</a>看齐吧。    </p><a id="more"></a><h2 id="reStructuredText-rst"><a href="#reStructuredText-rst" class="headerlink" title="reStructuredText(*.rst)"></a><a href="http://docutils.sourceforge.net/rst.html" target="_blank" rel="external">reStructuredText(*.rst)</a></h2><p>&nbsp;&nbsp;<a href="http://www.python.org" target="_blank" rel="external">Python</a>文档使用较多，写个<code>Readme.rst</code>也是没问题的，<a href="https://github.com" target="_blank" rel="external">GitHub</a>也可以直接渲染<code>rst</code>成<code>HTML</code>预览。<br><code>rst</code>语法很规范，对比<code>Markdown</code>有些语法相似，稍微复杂一点点。<a href="http://pypi.python.org/" target="_blank" rel="external">Python Package</a>的标准文档格式，起初还创建了一个工具<a href="http://www.sphinx-doc.org/" target="_blank" rel="external">Sphinx</a>来处理<code>Python</code>文档。<br>其实使用<code>rst</code>的也是大有人在。    </p><h2 id="RubyDoc-rdoc"><a href="#RubyDoc-rdoc" class="headerlink" title="RubyDoc(*.rdoc)"></a><a href="https://rdoc.github.io/rdoc/" target="_blank" rel="external">RubyDoc(*.rdoc)</a></h2><p>&nbsp;&nbsp;<a href="http://www.ruby-lang.org/" target="_blank" rel="external">Ruby</a>项目的文档系统。<code>*.rdoc</code>也被各个代码托管平台直接像<code>HTML</code>那样展示。<br><code>RDoc</code>可以生成<code>HTML</code>，<code>Ruby</code>自带<code>rdoc</code>命令，而且可以像<code>javadoc</code>那样，生成整个项目的在线API文档。<br>不过国人用Ruby的是不是少呀？    </p><h2 id="RedCloth-textile"><a href="#RedCloth-textile" class="headerlink" title="RedCloth(*.textile)"></a><a href="http://redcloth.org/textile" target="_blank" rel="external">RedCloth(*.textile)</a></h2><p>&nbsp;&nbsp;<code>textile</code>也是<code>Ruby</code>系的标记语言文本。由<a href="https://github.com/jgarber/redcloth" target="_blank" rel="external">RedCloth</a>模块处理。<br>它的语法同样很简洁，在各个平台上<code>*.textile</code>也可以直接以<code>HTML</code>预览。现在<code>textile</code>也被应用到了其他编程语言项目。<br>不过这后缀名太长了。    </p><h2 id="YAML-yml"><a href="#YAML-yml" class="headerlink" title="YAML(*.yml)"></a><a href="http://www.yaml.org/" target="_blank" rel="external">YAML(*.yml)</a></h2><p>&nbsp;&nbsp;<code>YAML</code>(<em>YAML Ain’t Markup Language</em>)<code>YAML</code>不是标记语言，但是它以ML结尾所以列出来了学习一下。<br><code>YAML</code>生下来是作为一种所有编程语言友好的数据序列化标准的，也用于项目配置文件，如<a href="http://docs.docker.com/compose/overview/" target="_blank" rel="external">docker</a>，<a href="http://swagger.io/swagger-editor/" target="_blank" rel="external">swagger</a>，<a href="http://hexo.io/docs/configuration.html" target="_blank" rel="external">hexo</a>。<br>顺便提一下<a href="http://json.org/" target="_blank" rel="external"><strong>JSON</strong></a>，<code>JSON</code>也用于数据序列化和配置文件。语法格式上<code>YAML</code>取决于代码块缩进，而<code>JSON</code>由’{‘,’}’来区分。    </p><hr><p>&nbsp;&nbsp;平时编程常用的就是上面这几个(虽然YAML不算，但也很常用)，还有其他的如<code>SGML</code>，<code>VRML</code>，<code>WML</code>，<code>DocBook</code>，<code>LaTeX</code>，<code>OPML</code>等等太多了。有些或已过时，有些正在制定标准，各种场景又有不同格式的标记文本…    </p><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p><a href="http://pandao.github.io/editor.md/" target="_blank" rel="external"><code>Editor.md</code></a>: Markdown在线编辑器<br><a href="http://www.pandoc.org/" target="_blank" rel="external"><code>Pandoc</code></a>: 支持多种格式互转<br><a href="http://docutils.sourceforge.net/" target="_blank" rel="external"><code>docutils</code></a>: 把<code>reStructuredText</code>转换成其他格式<br><a href="http://redcloth.org/" target="_blank" rel="external"><code>RedCloth</code></a>: 把textile转成html<br><code>Chrome</code>、<code>Atom</code>、<code>Idea</code>、<code>Sublime</code>都有相应的插件。</p>]]></content>
     
     <summary type="html">
     
@@ -63,18 +162,7 @@
     <published>2016-12-15T12:46:25.000Z</published>
     <updated>2016-12-20T15:22:22.000Z</updated>
     
-    <content type="html"><![CDATA[<p>计划搭建个人博客，用了下面提到的框架，这是自动生成的文章 (尊重原创，没有删除，不是广告哟)</p>
-<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
+    <content type="html"><![CDATA[<p>计划搭建个人博客，用了下面提到的框架，这是自动生成的文章 (尊重原创，没有删除，不是广告哟)</p><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure><a id="more"></a><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>]]></content>
     
     <summary type="html">
     
@@ -100,52 +188,7 @@
     <published>2016-11-15T12:46:25.000Z</published>
     <updated>2017-01-11T15:26:01.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="预览html"><a href="#预览html" class="headerlink" title="预览html"></a>预览html</h3><ul>
-<li><a href="https://htmlpreview.github.io/" target="_blank" rel="external">https://htmlpreview.github.io/</a></li>
-</ul>
-<h3 id="raw文件"><a href="#raw文件" class="headerlink" title="raw文件"></a>raw文件</h3><ul>
-<li>raw.githubusercontent.com<br>e.g. <a href="https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk" target="_blank" rel="external">https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk</a></li>
-</ul>
-<a id="more"></a>
-<ul>
-<li>?raw=true<br>e.g. <a href="https://github.com/liumengjun/SudokuPuzzle/blob/master/SudokuPuzzle.apk?raw=true" target="_blank" rel="external">https://github.com/liumengjun/SudokuPuzzle/blob/master/SudokuPuzzle.apk?raw=true</a></li>
-</ul>
-<h3 id="打包下载"><a href="#打包下载" class="headerlink" title="打包下载"></a>打包下载</h3><p>归档链接 <code>github.com/repos/:owner/:repo/:archive_format/:ref</code> <a href="https://developer.github.com/v3/repos/contents/#get-archive-link" target="_blank" rel="external">@see GitHub API</a></p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>owner</code></td>
-<td>GitHub用户名</td>
-</tr>
-<tr>
-<td><code>repo</code></td>
-<td>项目名</td>
-</tr>
-<tr>
-<td><code>archive_format</code></td>
-<td>tarball 或 zipball</td>
-</tr>
-<tr>
-<td><code>ref</code></td>
-<td>有效的Git引用，branch、tag、commit</td>
-</tr>
-</tbody>
-</table>
-<p>例如：<br><a href="https://github.com/liumengjun/liumengjun.github.io/tarball/master" target="_blank" rel="external">https://github.com/liumengjun/liumengjun.github.io/tarball/master</a><br><a href="https://github.com/liumengjun/liumengjun.github.io/zipball/b16ffbcb8" target="_blank" rel="external">https://github.com/liumengjun/liumengjun.github.io/zipball/b16ffbcb8</a>    </p>
-<h3 id="删除敏感数据"><a href="#删除敏感数据" class="headerlink" title="删除敏感数据"></a>删除敏感数据</h3><ul>
-<li>use <a href="https://rtyley.github.io/bfg-repo-cleaner/" target="_blank" rel="external">bfg</a> or <a href="https://git-scm.com/docs/git-filter-branch" target="_blank" rel="external">git-filter-branch</a>. <a href="https://help.github.com/articles/remove-sensitive-data/" target="_blank" rel="external">@see help doc</a></li>
-<li>git-rebase -i 修改历史commit点然后提交（commit较多时不方便）</li>
-</ul>
-<h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><ul>
-<li>create a repo named ${your_username}.github.io. <a href="https://pages.github.com/" target="_blank" rel="external">more&gt;&gt;</a></li>
-</ul>
-]]></content>
+    <content type="html"><![CDATA[<h3 id="预览html"><a href="#预览html" class="headerlink" title="预览html"></a>预览html</h3><ul><li><a href="https://htmlpreview.github.io/" target="_blank" rel="external">https://htmlpreview.github.io/</a></li></ul><h3 id="raw文件"><a href="#raw文件" class="headerlink" title="raw文件"></a>raw文件</h3><ul><li>raw.githubusercontent.com<br>e.g. <a href="https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk" target="_blank" rel="external">https://raw.githubusercontent.com/liumengjun/towersOfHanoi/master/towersOfHanoi.apk</a></li></ul><a id="more"></a><ul><li>?raw=true<br>e.g. <a href="https://github.com/liumengjun/SudokuPuzzle/blob/master/SudokuPuzzle.apk?raw=true" target="_blank" rel="external">https://github.com/liumengjun/SudokuPuzzle/blob/master/SudokuPuzzle.apk?raw=true</a></li></ul><h3 id="打包下载"><a href="#打包下载" class="headerlink" title="打包下载"></a>打包下载</h3><p>归档链接 <code>github.com/repos/:owner/:repo/:archive_format/:ref</code> <a href="https://developer.github.com/v3/repos/contents/#get-archive-link" target="_blank" rel="external">@see GitHub API</a></p><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>owner</code></td><td>GitHub用户名</td></tr><tr><td><code>repo</code></td><td>项目名</td></tr><tr><td><code>archive_format</code></td><td>tarball 或 zipball</td></tr><tr><td><code>ref</code></td><td>有效的Git引用，branch、tag、commit</td></tr></tbody></table><p>例如：<br><a href="https://github.com/liumengjun/liumengjun.github.io/tarball/master" target="_blank" rel="external">https://github.com/liumengjun/liumengjun.github.io/tarball/master</a><br><a href="https://github.com/liumengjun/liumengjun.github.io/zipball/b16ffbcb8" target="_blank" rel="external">https://github.com/liumengjun/liumengjun.github.io/zipball/b16ffbcb8</a>    </p><h3 id="删除敏感数据"><a href="#删除敏感数据" class="headerlink" title="删除敏感数据"></a>删除敏感数据</h3><ul><li>use <a href="https://rtyley.github.io/bfg-repo-cleaner/" target="_blank" rel="external">bfg</a> or <a href="https://git-scm.com/docs/git-filter-branch" target="_blank" rel="external">git-filter-branch</a>. <a href="https://help.github.com/articles/remove-sensitive-data/" target="_blank" rel="external">@see help doc</a></li><li>git-rebase -i 修改历史commit点然后提交（commit较多时不方便）</li></ul><h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><ul><li>create a repo named ${your_username}.github.io. <a href="https://pages.github.com/" target="_blank" rel="external">more&gt;&gt;</a></li></ul>]]></content>
     
     <summary type="html">
     

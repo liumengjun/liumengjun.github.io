@@ -3,18 +3,20 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>归档: 2016/12 | Simple Space</title>
+  <title>关于 Gradle 执行 main-class | Simple Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simple Space">
-<meta property="og:url" content="https://liumengjun.github.io/archives/2016/12/index.html">
+  <meta name="description" content="用application插件，或使用JavaExec任务 传递jvm option用jvmArgs属性，示例如下：12345678task execute(type:JavaExec) &amp;#123;    //only for projects do not have &quot;main&quot; classes but use default starters    if(project.hasPropert">
+<meta name="keywords" content="Gradle,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于 Gradle 执行 main-class">
+<meta property="og:url" content="https://liumengjun.github.io/2018/03/30/gradle-execute-main-class.html">
 <meta property="og:site_name" content="Simple Space">
-<meta property="og:description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
+<meta property="og:description" content="用application插件，或使用JavaExec任务 传递jvm option用jvmArgs属性，示例如下：12345678task execute(type:JavaExec) &amp;#123;    //only for projects do not have &quot;main&quot; classes but use default starters    if(project.hasPropert">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-01T15:01:11.908Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simple Space">
-<meta name="twitter:description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
+<meta name="twitter:title" content="关于 Gradle 执行 main-class">
+<meta name="twitter:description" content="用application插件，或使用JavaExec任务 传递jvm option用jvmArgs属性，示例如下：12345678task execute(type:JavaExec) &amp;#123;    //only for projects do not have &quot;main&quot; classes but use default starters    if(project.hasPropert">
   
     <link rel="alternate" href="/atom.xml" title="Simple Space" type="application/atom+xml">
   
@@ -123,58 +125,77 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/19/markup-text.html" class="archive-article-date">
-  <time datetime="2016-12-19T12:27:10.000Z" itemprop="datePublished">12月 19</time>
+        <section id="main"><article id="post-gradle-execute-main-class" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/30/gradle-execute-main-class.html" class="article-date">
+  <time datetime="2018-03-30T13:04:04.000Z" itemprop="datePublished">2018-03-30</time>
 </a>
-      
+    
+  <div class="article-category">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    <a class="article-category-link" href="/categories/构建工具/">构建工具</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/19/markup-text.html">标记语言文本学习</a>
+    <h1 class="article-title" itemprop="name">
+      关于 Gradle 执行 main-class
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/15/hello-hexo.html" class="archive-article-date">
-  <time datetime="2016-12-15T12:46:25.000Z" itemprop="datePublished">12月 15</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/15/hello-hexo.html">Hello Hexo</a>
-    </h1>
-  
+        <!-- ### 关于gradle执行main-class -->
+<p><code>用application插件，或使用JavaExec任务</code></p>
+<h4 id="传递jvm-option用jvmArgs属性，示例如下："><a href="#传递jvm-option用jvmArgs属性，示例如下：" class="headerlink" title="传递jvm option用jvmArgs属性，示例如下："></a>传递jvm option用<code>jvmArgs</code>属性，示例如下：</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">task</span> execute(type:JavaExec) &#123;</span><br><span class="line">    <span class="comment">//only for projects do not have "main" classes but use default starters</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">project</span>.hasProperty(<span class="string">'mainClassName'</span>)) &#123;</span><br><span class="line">        main = mainClassName</span><br><span class="line">        <span class="keyword">classpath</span> = <span class="keyword">sourceSets</span>.main.runtimeClasspath</span><br><span class="line">        jvmArgs = [<span class="string">"-agentlib:jdwp=transport=dt_socket,address=31843,suspend=n,server=y"</span>, <span class="string">"-Dgreeting=hello"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="调试gradle启动的程序："><a href="#调试gradle启动的程序：" class="headerlink" title="调试gradle启动的程序："></a>调试gradle启动的程序：</h4><p><code>GRADLE_OPTS</code>环境变量只是把给定的参数传递给<code>gradle</code>，没有传递给要执行的<code>main-class</code>。比如要调试程序，用<code>GRADLE_OPTS</code>是没用的，我们不调试<code>gradle</code>，我们需要调试的是<code>main-class</code>，故需要用<code>jvmArgs</code>。</p>
+<h4 id="两个参考链接"><a href="#两个参考链接" class="headerlink" title="两个参考链接"></a>两个参考链接</h4><ul>
+<li><p>(1) <a href="https://docs.gradle.org/current/userguide/application_plugin.html" target="_blank" rel="noopener">The Application Plugin - Gradle User Manual</a></p>
+</li>
+<li><p>(2) <a href="https://stackoverflow.com/questions/21358466/gradle-to-execute-java-class-without-modifying-build-gradle" target="_blank" rel="noopener">Gradle to execute Java class (without modifying build.gradle) - Stack Overflow</a></p>
+</li>
+</ul>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://liumengjun.github.io/2018/03/30/gradle-execute-main-class.html" data-id="cjtygypu200004qjwg9khbet9" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/31/gradle-test-source-dependencies.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">较新</strong>
+      <div class="article-nav-title">
+        
+          Gradle 跨模块依赖测试代码
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/19/markup-text.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">较旧</strong>
+      <div class="article-nav-title">标记语言文本学习</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         

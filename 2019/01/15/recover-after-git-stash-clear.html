@@ -3,18 +3,20 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>归档: 2016/12 | Simple Space</title>
+  <title>git stash clear 后，找回 stash 的代码 | Simple Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simple Space">
-<meta property="og:url" content="https://liumengjun.github.io/archives/2016/12/index.html">
+  <meta name="description" content="使用git stash隐藏工作区内修改但未提交的代码，git stash list查看stash的历史记录，git stash clear清除所有的stash栈。 有时候可能不小心git stash clear掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回： 1git fsck --no-reflogs 2&amp;gt;&amp;amp;1 | awk &apos;/dangl">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git stash clear 后，找回 stash 的代码">
+<meta property="og:url" content="https://liumengjun.github.io/2019/01/15/recover-after-git-stash-clear.html">
 <meta property="og:site_name" content="Simple Space">
-<meta property="og:description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
+<meta property="og:description" content="使用git stash隐藏工作区内修改但未提交的代码，git stash list查看stash的历史记录，git stash clear清除所有的stash栈。 有时候可能不小心git stash clear掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回： 1git fsck --no-reflogs 2&amp;gt;&amp;amp;1 | awk &apos;/dangl">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-01T15:17:54.695Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simple Space">
-<meta name="twitter:description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
+<meta name="twitter:title" content="git stash clear 后，找回 stash 的代码">
+<meta name="twitter:description" content="使用git stash隐藏工作区内修改但未提交的代码，git stash list查看stash的历史记录，git stash clear清除所有的stash栈。 有时候可能不小心git stash clear掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回： 1git fsck --no-reflogs 2&amp;gt;&amp;amp;1 | awk &apos;/dangl">
   
     <link rel="alternate" href="/atom.xml" title="Simple Space" type="application/atom+xml">
   
@@ -123,58 +125,69 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/19/markup-text.html" class="archive-article-date">
-  <time datetime="2016-12-19T12:27:10.000Z" itemprop="datePublished">12月 19</time>
+        <section id="main"><article id="post-recover-after-git-stash-clear" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/15/recover-after-git-stash-clear.html" class="article-date">
+  <time datetime="2019-01-15T13:32:21.000Z" itemprop="datePublished">2019-01-15</time>
 </a>
-      
+    
+  <div class="article-category">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    <a class="article-category-link" href="/categories/代码管理/">代码管理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/19/markup-text.html">标记语言文本学习</a>
+    <h1 class="article-title" itemprop="name">
+      git stash clear 后，找回 stash 的代码
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/15/hello-hexo.html" class="archive-article-date">
-  <time datetime="2016-12-15T12:46:25.000Z" itemprop="datePublished">12月 15</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/15/hello-hexo.html">Hello Hexo</a>
-    </h1>
-  
+        <!-- # git stash clear 后，找回 stash 的代码 -->
+<p>使用<code>git stash</code>隐藏工作区内修改但未提交的代码，<code>git stash list</code>查看<code>stash</code>的历史记录，<code>git stash clear</code>清除所有的stash栈。</p>
+<p>有时候可能不小心<code>git stash clear</code>掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fsck --no-reflogs 2&gt;&amp;1 | awk <span class="string">'/dangling commit/ &#123;print $3&#125;'</span> | xargs git show --<span class="built_in">stat</span></span><br></pre></td></tr></table></figure>
+<p>上述命令得到了所有dangling commit，其描述，以及修改的文件列表。观察一下，<code>stash</code>记录描述以<code>WIP</code>开头（work in progress缩写，进行中的工作），结合修改文件列表就能找到那个commit了。</p>
+<p>然后执行<code>git cherry-pick</code>或者<code>git stash apply</code>命令就可以恢复了，参数是那个commit id。</p>
+<h4 id="解析："><a href="#解析：" class="headerlink" title="解析："></a><strong>解析</strong>：</h4><ul>
+<li><code>git fsck</code>找出所有dangling的对象，也可以不加<code>--no-reflogs</code>参数。<code>2&gt;&amp;1</code>为了隐藏烦人的错误输出，可不加。  </li>
+<li><code>awk</code>过滤commit类型，并输出commit id值  </li>
+<li><code>xargs git show --stat</code>对所有commit_id执行<code>git show --stat</code>命令  </li>
+</ul>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://liumengjun.github.io/2019/01/15/recover-after-git-stash-clear.html" data-id="cjtyhss4c000i4qjw745cdqsj" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/24/git-sparse-checkout.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">较旧</strong>
+      <div class="article-nav-title">git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录)</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
