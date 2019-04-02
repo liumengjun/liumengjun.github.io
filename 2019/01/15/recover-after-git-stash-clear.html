@@ -3,19 +3,19 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>git stash clear 后，找回 stash 的代码 | Simple Space</title>
+  <title>git stash clear 后恢复代码 | Simple Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="使用git stash隐藏工作区内修改但未提交的代码，git stash list查看stash的历史记录，git stash clear清除所有的stash栈。 有时候可能不小心git stash clear掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回： 1git fsck --no-reflogs 2&amp;gt;&amp;amp;1 | awk &apos;/dangl">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git stash clear 后，找回 stash 的代码">
+<meta property="og:title" content="git stash clear 后恢复代码">
 <meta property="og:url" content="https://liumengjun.github.io/2019/01/15/recover-after-git-stash-clear.html">
 <meta property="og:site_name" content="Simple Space">
 <meta property="og:description" content="使用git stash隐藏工作区内修改但未提交的代码，git stash list查看stash的历史记录，git stash clear清除所有的stash栈。 有时候可能不小心git stash clear掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回： 1git fsck --no-reflogs 2&amp;gt;&amp;amp;1 | awk &apos;/dangl">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-01T15:17:54.695Z">
+<meta property="og:updated_time" content="2019-04-02T14:20:46.932Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git stash clear 后，找回 stash 的代码">
+<meta name="twitter:title" content="git stash clear 后恢复代码">
 <meta name="twitter:description" content="使用git stash隐藏工作区内修改但未提交的代码，git stash list查看stash的历史记录，git stash clear清除所有的stash栈。 有时候可能不小心git stash clear掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回： 1git fsck --no-reflogs 2&amp;gt;&amp;amp;1 | awk &apos;/dangl">
   
     <link rel="alternate" href="/atom.xml" title="Simple Space" type="application/atom+xml">
@@ -144,7 +144,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      git stash clear 后，找回 stash 的代码
+      git stash clear 后恢复代码
     </h1>
   
 
@@ -156,6 +156,7 @@ ga('send', 'pageview');
 <p>使用<code>git stash</code>隐藏工作区内修改但未提交的代码，<code>git stash list</code>查看<code>stash</code>的历史记录，<code>git stash clear</code>清除所有的stash栈。</p>
 <p>有时候可能不小心<code>git stash clear</code>掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fsck --no-reflogs 2&gt;&amp;1 | awk <span class="string">'/dangling commit/ &#123;print $3&#125;'</span> | xargs git show --<span class="built_in">stat</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>上述命令得到了所有dangling commit，其描述，以及修改的文件列表。观察一下，<code>stash</code>记录描述以<code>WIP</code>开头（work in progress缩写，进行中的工作），结合修改文件列表就能找到那个commit了。</p>
 <p>然后执行<code>git cherry-pick</code>或者<code>git stash apply</code>命令就可以恢复了，参数是那个commit id。</p>
 <h4 id="解析："><a href="#解析：" class="headerlink" title="解析："></a><strong>解析</strong>：</h4><ul>
@@ -179,9 +180,9 @@ ga('send', 'pageview');
 <nav id="article-nav">
   
   
-    <a href="/2018/09/24/git-sparse-checkout.html" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/12/21/spring-cloud-zone-usage.html" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">较旧</strong>
-      <div class="article-nav-title">git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录)</div>
+      <div class="article-nav-title">spring-cloud zone, 类似 dubbo group 功能</div>
     </a>
   
 </nav>
@@ -203,11 +204,15 @@ ga('send', 'pageview');
       <ul>
         
           <li>
-            <a href="/2019/01/15/recover-after-git-stash-clear.html">git stash clear 后，找回 stash 的代码</a>
+            <a href="/2019/01/15/recover-after-git-stash-clear.html">git stash clear 后恢复代码</a>
           </li>
         
           <li>
-            <a href="/2018/09/24/git-sparse-checkout.html">git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录)</a>
+            <a href="/2018/12/21/spring-cloud-zone-usage.html">spring-cloud zone, 类似 dubbo group 功能</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/24/git-sparse-checkout.html">git clone/checkout 指定文件/目录</a>
           </li>
         
           <li>
@@ -216,10 +221,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2018/03/30/gradle-execute-main-class.html">关于 Gradle 执行 main-class</a>
-          </li>
-        
-          <li>
-            <a href="/2016/12/19/markup-text.html">标记语言文本学习</a>
           </li>
         
       </ul>
@@ -234,7 +235,7 @@ ga('send', 'pageview');
       分类
     </h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/代码管理/">代码管理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源工具/">开源工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/构建工具/">构建工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/网页搭建/">网页搭建</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/代码管理/">代码管理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源工具/">开源工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/构建工具/">构建工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/网页搭建/">网页搭建</a></li></ul>
     </div>
   </div>
 
@@ -247,7 +248,7 @@ ga('send', 'pageview');
       标签
     </h3>
     <div class="widget tagcloud">
-      <a href="/tags/Blog/" style="font-size: 10px;">Blog</a> <a href="/tags/Gradle/" style="font-size: 15px;">Gradle</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/RDoc/" style="font-size: 10px;">RDoc</a> <a href="/tags/WEB/" style="font-size: 10px;">WEB</a> <a href="/tags/YAML/" style="font-size: 10px;">YAML</a> <a href="/tags/git/" style="font-size: 20px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/reStructuredText/" style="font-size: 10px;">reStructuredText</a> <a href="/tags/textile/" style="font-size: 10px;">textile</a>
+      <a href="/tags/Blog/" style="font-size: 10px;">Blog</a> <a href="/tags/Gradle/" style="font-size: 15px;">Gradle</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/RDoc/" style="font-size: 10px;">RDoc</a> <a href="/tags/WEB/" style="font-size: 10px;">WEB</a> <a href="/tags/YAML/" style="font-size: 10px;">YAML</a> <a href="/tags/git/" style="font-size: 20px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/reStructuredText/" style="font-size: 10px;">reStructuredText</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/spring-cloud/" style="font-size: 10px;">spring-cloud</a> <a href="/tags/textile/" style="font-size: 10px;">textile</a>
     </div>
   </div>
 
@@ -259,7 +260,7 @@ ga('send', 'pageview');
       归档
     </h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li></ul>
     </div>
   </div>
 

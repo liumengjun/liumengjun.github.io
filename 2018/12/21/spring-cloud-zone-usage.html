@@ -3,20 +3,20 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>git clone/checkout 指定文件/目录 | Simple Space</title>
+  <title>spring-cloud zone, 类似 dubbo group 功能 | Simple Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="对比svn，svn可以更新或下载特定目录(甚至精确控制每个目录权限)，可是git不可以吗？在Git1.7.0以前，这无法实现，但是幸运的是在Git1.7.0以后加入了Sparse Checkout（直译为：稀疏检出）模式，这使得Check Out指定文件或者目录成为可能。操作如下： 对于已有项目12345678910# 使能Sparse Checkout(稀疏检出)git config core">
-<meta name="keywords" content="git">
+  <meta name="description" content="spring-cloud zone 本地开发使用 当我们使用spring-cloud微服务框架时(netflix eureka组合)，有很多微服务程序。开发时，本地启动eureka并注册所有微服务，成本太高。直接使用公共开发环境的eureka，确实省事。比如有A, B, C三个服务，A没有变化，B有修改，C有修改并调用B，此时本地不用启动A，只启动B和C就可以。不过不注意又有个问题，C调用B时，有">
+<meta name="keywords" content="java,spring-cloud,spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git clone&#x2F;checkout 指定文件&#x2F;目录">
-<meta property="og:url" content="https://liumengjun.github.io/2018/09/24/git-sparse-checkout.html">
+<meta property="og:title" content="spring-cloud zone, 类似 dubbo group 功能">
+<meta property="og:url" content="https://liumengjun.github.io/2018/12/21/spring-cloud-zone-usage.html">
 <meta property="og:site_name" content="Simple Space">
-<meta property="og:description" content="对比svn，svn可以更新或下载特定目录(甚至精确控制每个目录权限)，可是git不可以吗？在Git1.7.0以前，这无法实现，但是幸运的是在Git1.7.0以后加入了Sparse Checkout（直译为：稀疏检出）模式，这使得Check Out指定文件或者目录成为可能。操作如下： 对于已有项目12345678910# 使能Sparse Checkout(稀疏检出)git config core">
+<meta property="og:description" content="spring-cloud zone 本地开发使用 当我们使用spring-cloud微服务框架时(netflix eureka组合)，有很多微服务程序。开发时，本地启动eureka并注册所有微服务，成本太高。直接使用公共开发环境的eureka，确实省事。比如有A, B, C三个服务，A没有变化，B有修改，C有修改并调用B，此时本地不用启动A，只启动B和C就可以。不过不注意又有个问题，C调用B时，有">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-02T14:20:11.050Z">
+<meta property="og:updated_time" content="2019-04-02T15:16:51.412Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git clone&#x2F;checkout 指定文件&#x2F;目录">
-<meta name="twitter:description" content="对比svn，svn可以更新或下载特定目录(甚至精确控制每个目录权限)，可是git不可以吗？在Git1.7.0以前，这无法实现，但是幸运的是在Git1.7.0以后加入了Sparse Checkout（直译为：稀疏检出）模式，这使得Check Out指定文件或者目录成为可能。操作如下： 对于已有项目12345678910# 使能Sparse Checkout(稀疏检出)git config core">
+<meta name="twitter:title" content="spring-cloud zone, 类似 dubbo group 功能">
+<meta name="twitter:description" content="spring-cloud zone 本地开发使用 当我们使用spring-cloud微服务框架时(netflix eureka组合)，有很多微服务程序。开发时，本地启动eureka并注册所有微服务，成本太高。直接使用公共开发环境的eureka，确实省事。比如有A, B, C三个服务，A没有变化，B有修改，C有修改并调用B，此时本地不用启动A，只启动B和C就可以。不过不注意又有个问题，C调用B时，有">
   
     <link rel="alternate" href="/atom.xml" title="Simple Space" type="application/atom+xml">
   
@@ -125,15 +125,15 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-git-sparse-checkout" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-spring-cloud-zone-usage" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/09/24/git-sparse-checkout.html" class="article-date">
-  <time datetime="2018-09-24T15:31:17.000Z" itemprop="datePublished">2018-09-24</time>
+    <a href="/2018/12/21/spring-cloud-zone-usage.html" class="article-date">
+  <time datetime="2018-12-21T12:58:35.000Z" itemprop="datePublished">2018-12-21</time>
 </a>
     
   <div class="article-category">
     <i class="fa fa-list" aria-hidden="true"></i>
-    <a class="article-category-link" href="/categories/代码管理/">代码管理</a>
+    <a class="article-category-link" href="/categories/框架/">框架</a>
   </div>
 
   </div>
@@ -144,7 +144,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      git clone/checkout 指定文件/目录
+      spring-cloud zone, 类似 dubbo group 功能
     </h1>
   
 
@@ -152,19 +152,23 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- # git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录) -->
-<p>对比svn，svn可以更新或下载特定目录(甚至精确控制每个目录权限)，可是git不可以吗？在Git1.7.0以前，这无法实现，但是幸运的是在Git1.7.0以后加入了Sparse Checkout（直译为：稀疏检出）模式，这使得Check Out指定文件或者目录成为可能。操作如下：</p>
-<h3 id="对于已有项目"><a href="#对于已有项目" class="headerlink" title="对于已有项目"></a>对于已有项目</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使能Sparse Checkout(稀疏检出)</span></span><br><span class="line">git config core.sparsecheckout <span class="literal">true</span></span><br><span class="line"><span class="comment"># 编辑'.git/info/sparse-checkout'，规则类似gitignore。比如</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'</span></span><br><span class="line"><span class="string">/src</span></span><br><span class="line"><span class="string">readme.md</span></span><br><span class="line"><span class="string">'</span> &gt; .git/info/sparse-checkout</span><br><span class="line"><span class="comment"># 只保留根目录下/src目录和readme.md文件</span></span><br><span class="line">git checkout</span><br><span class="line"><span class="comment"># ls，就可以看到内容已经变了，只有src和readme.md两项</span></span><br></pre></td></tr></table></figure>
+        <p>spring-cloud zone 本地开发使用</p>
+<p>当我们使用spring-cloud微服务框架时(netflix eureka组合)，有很多微服务程序。开发时，本地启动eureka并注册所有微服务，成本太高。<br>直接使用公共开发环境的eureka，确实省事。比如有A, B, C三个服务，A没有变化，B有修改，C有修改并调用B，此时本地不用启动A，只启动B和C就可以。<br>不过不注意又有个问题，C调用B时，有时候调用公共环境上B服务，甚至其他开发者启动的B服务。dubbo有group配置给服务分组解决此问题；对于spring-cloud，此时需要配置zone:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">eureka.instance.metadataMap.zone:</span> <span class="string">YOUR-NAME</span></span><br><span class="line"><span class="string">eureka.client.preferSameZoneEureka:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h3 id="对于新项目"><a href="#对于新项目" class="headerlink" title="对于新项目"></a>对于新项目</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git init newdir &amp;&amp; <span class="built_in">cd</span> newdir</span><br><span class="line"><span class="comment"># 使能Sparse Checkout(稀疏检出)</span></span><br><span class="line">git config core.sparsecheckout <span class="literal">true</span></span><br><span class="line"><span class="comment"># 编辑'.git/info/sparse-checkout'，具体略</span></span><br><span class="line">git remote add origin git@github.com:yourname/yourrepo.git</span><br><span class="line"><span class="comment"># 下载</span></span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
+<p>本地各个服务都配置zone且相同，各个开发者的zone不同，公共环境默认是defaultZone。然后，C调用B时，就不再混乱了，只调用本地的。(A服务则访问其他zone的)</p>
+<p>刚接触spring-cloud时，不知道怎么解决这个问题，baidu或google搜spring-cloud中group功能也没有好答案。自己动手吧，写了个client继承<code>LoadBalancerFeignClient</code>，用<code>@Configuration</code>机制配置了下，忙活半天多，可以了。转念一想，不对啊，这个功能spring-cloud应该有啊，看看文档去吧。果不其然，确实有。<strong>犯了个错误：不看文档就瞎弄。</strong>使用xxx库或工具时，先看看xxx的官方文档，很有用！</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="https://cloud.spring.io/spring-cloud-netflix/spring-cloud-netflix.html#_zones" target="_blank" rel="noopener">https://cloud.spring.io/spring-cloud-netflix/spring-cloud-netflix.html#_zones</a></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://liumengjun.github.io/2018/09/24/git-sparse-checkout.html" data-id="cjtyhmpk7000b4qjwyx4es2m4" class="article-share-link">分享</a>
+      <a data-url="https://liumengjun.github.io/2018/12/21/spring-cloud-zone-usage.html" data-id="cjtzxijb500008zjwmio5ywrz" class="article-share-link">分享</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
 
     </footer>
   </div>
@@ -172,19 +176,19 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2018/12/21/spring-cloud-zone-usage.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/01/15/recover-after-git-stash-clear.html" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">较新</strong>
       <div class="article-nav-title">
         
-          spring-cloud zone, 类似 dubbo group 功能
+          git stash clear 后恢复代码
         
       </div>
     </a>
   
   
-    <a href="/2018/03/31/gradle-test-source-dependencies.html" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/09/24/git-sparse-checkout.html" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">较旧</strong>
-      <div class="article-nav-title">Gradle 跨模块依赖测试代码</div>
+      <div class="article-nav-title">git clone/checkout 指定文件/目录</div>
     </a>
   
 </nav>

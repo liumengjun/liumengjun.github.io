@@ -144,7 +144,7 @@ ga('send', 'pageview');
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/recover-after-git-stash-clear.html">git stash clear 后，找回 stash 的代码</a>
+      <a class="article-title" href="/2019/01/15/recover-after-git-stash-clear.html">git stash clear 后恢复代码</a>
     </h1>
   
 
@@ -156,14 +156,11 @@ ga('send', 'pageview');
 <p>使用<code>git stash</code>隐藏工作区内修改但未提交的代码，<code>git stash list</code>查看<code>stash</code>的历史记录，<code>git stash clear</code>清除所有的stash栈。</p>
 <p>有时候可能不小心<code>git stash clear</code>掉了所有的记录，可是那些代码还有用。哎呀，杯具了，白写了！其实不用慌，可用下面的方法找回：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fsck --no-reflogs 2&gt;&amp;1 | awk <span class="string">'/dangling commit/ &#123;print $3&#125;'</span> | xargs git show --<span class="built_in">stat</span></span><br></pre></td></tr></table></figure>
-<p>上述命令得到了所有dangling commit，其描述，以及修改的文件列表。观察一下，<code>stash</code>记录描述以<code>WIP</code>开头（work in progress缩写，进行中的工作），结合修改文件列表就能找到那个commit了。</p>
-<p>然后执行<code>git cherry-pick</code>或者<code>git stash apply</code>命令就可以恢复了，参数是那个commit id。</p>
-<h4 id="解析："><a href="#解析：" class="headerlink" title="解析："></a><strong>解析</strong>：</h4><ul>
-<li><code>git fsck</code>找出所有dangling的对象，也可以不加<code>--no-reflogs</code>参数。<code>2&gt;&amp;1</code>为了隐藏烦人的错误输出，可不加。  </li>
-<li><code>awk</code>过滤commit类型，并输出commit id值  </li>
-<li><code>xargs git show --stat</code>对所有commit_id执行<code>git show --stat</code>命令  </li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a href="/2019/01/15/recover-after-git-stash-clear.html#more">阅读全文&gt;&gt;</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
@@ -171,6 +168,56 @@ ga('send', 'pageview');
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-spring-cloud-zone-usage" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/21/spring-cloud-zone-usage.html" class="article-date">
+  <time datetime="2018-12-21T12:58:35.000Z" itemprop="datePublished">2018-12-21</time>
+</a>
+    
+  <div class="article-category">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    <a class="article-category-link" href="/categories/框架/">框架</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/21/spring-cloud-zone-usage.html">spring-cloud zone, 类似 dubbo group 功能</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>spring-cloud zone 本地开发使用</p>
+<p>当我们使用spring-cloud微服务框架时(netflix eureka组合)，有很多微服务程序。开发时，本地启动eureka并注册所有微服务，成本太高。<br>直接使用公共开发环境的eureka，确实省事。比如有A, B, C三个服务，A没有变化，B有修改，C有修改并调用B，此时本地不用启动A，只启动B和C就可以。<br>不过不注意又有个问题，C调用B时，有时候调用公共环境上B服务，甚至其他开发者启动的B服务。dubbo有group配置给服务分组解决此问题；对于spring-cloud，此时需要配置zone:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">eureka.instance.metadataMap.zone:</span> <span class="string">YOUR-NAME</span></span><br><span class="line"><span class="string">eureka.client.preferSameZoneEureka:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2018/12/21/spring-cloud-zone-usage.html#more">阅读全文&gt;&gt;</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://liumengjun.github.io/2018/12/21/spring-cloud-zone-usage.html" data-id="cjtzxijb500008zjwmio5ywrz" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
 
     </footer>
   </div>
@@ -198,7 +245,7 @@ ga('send', 'pageview');
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/24/git-sparse-checkout.html">git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录)</a>
+      <a class="article-title" href="/2018/09/24/git-sparse-checkout.html">git clone/checkout 指定文件/目录</a>
     </h1>
   
 
@@ -209,8 +256,11 @@ ga('send', 'pageview');
         <!-- # git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录) -->
 <p>对比svn，svn可以更新或下载特定目录(甚至精确控制每个目录权限)，可是git不可以吗？在Git1.7.0以前，这无法实现，但是幸运的是在Git1.7.0以后加入了Sparse Checkout（直译为：稀疏检出）模式，这使得Check Out指定文件或者目录成为可能。操作如下：</p>
 <h3 id="对于已有项目"><a href="#对于已有项目" class="headerlink" title="对于已有项目"></a>对于已有项目</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使能Sparse Checkout(稀疏检出)</span></span><br><span class="line">git config core.sparsecheckout <span class="literal">true</span></span><br><span class="line"><span class="comment"># 编辑'.git/info/sparse-checkout'，规则类似gitignore。比如</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'</span></span><br><span class="line"><span class="string">/src</span></span><br><span class="line"><span class="string">readme.md</span></span><br><span class="line"><span class="string">'</span> &gt; .git/info/sparse-checkout</span><br><span class="line"><span class="comment"># 只保留根目录下/src目录和readme.md文件</span></span><br><span class="line">git checkout</span><br><span class="line"><span class="comment"># ls，就可以看到内容已经变了，只有src和readme.md两项</span></span><br></pre></td></tr></table></figure>
-<h3 id="对于新项目"><a href="#对于新项目" class="headerlink" title="对于新项目"></a>对于新项目</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git init newdir &amp;&amp; <span class="built_in">cd</span> newdir</span><br><span class="line"><span class="comment"># 使能Sparse Checkout(稀疏检出)</span></span><br><span class="line">git config core.sparsecheckout <span class="literal">true</span></span><br><span class="line"><span class="comment"># 编辑'.git/info/sparse-checkout'，具体略</span></span><br><span class="line">git remote add origin git@github.com:yourname/yourrepo.git</span><br><span class="line"><span class="comment"># 下载</span></span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
-
+        
+          <p class="article-more-link">
+            <a href="/2018/09/24/git-sparse-checkout.html#more">阅读全文&gt;&gt;</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
@@ -255,14 +305,11 @@ ga('send', 'pageview');
       
         <h3 id="gradle中，模块A依赖core模块的测试代码"><a href="#gradle中，模块A依赖core模块的测试代码" class="headerlink" title="gradle中，模块A依赖core模块的测试代码"></a>gradle中，模块A依赖core模块的测试代码</h3><p>测试代码(test文件夹下的代码)，是不跟随打包发布的，而且默认不随project依赖传递到其他的模块，需要用<code>.sourceSets.test.output</code>指明</p>
 <h4 id="简单配置，如下："><a href="#简单配置，如下：" class="headerlink" title="简单配置，如下："></a>简单配置，如下：</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A's build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':core'</span>)</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    testCompile <span class="keyword">project</span>(<span class="string">':core'</span>).<span class="keyword">sourceSets</span>.test.output</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="或者，configuration-of-testOutput"><a href="#或者，configuration-of-testOutput" class="headerlink" title="或者，configuration of testOutput"></a>或者，configuration of testOutput</h4><p>以上只是简单的配置，也可以配置一个testOutput configuration，具体如下：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// core's build.gradle</span></span><br><span class="line"><span class="keyword">configurations</span> &#123;</span><br><span class="line">    testOutput</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    testOutput <span class="keyword">sourceSets</span>.test.output</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A's build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    testCompile <span class="keyword">project</span>(path: <span class="string">':core'</span>, configuration: <span class="string">'testOutput'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
-<li><a href="https://softnoise.wordpress.com/2014/09/07/gradle-sub-project-test-dependencies-in-multi-project-builds/" target="_blank" rel="noopener">Gradle: sub-project test dependencies in multi-project builds</a></li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a href="/2018/03/31/gradle-test-source-dependencies.html#more">阅读全文&gt;&gt;</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
@@ -308,14 +355,11 @@ ga('send', 'pageview');
         <!-- ### 关于gradle执行main-class -->
 <p><code>用application插件，或使用JavaExec任务</code></p>
 <h4 id="传递jvm-option用jvmArgs属性，示例如下："><a href="#传递jvm-option用jvmArgs属性，示例如下：" class="headerlink" title="传递jvm option用jvmArgs属性，示例如下："></a>传递jvm option用<code>jvmArgs</code>属性，示例如下：</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">task</span> execute(type:JavaExec) &#123;</span><br><span class="line">    <span class="comment">//only for projects do not have "main" classes but use default starters</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">project</span>.hasProperty(<span class="string">'mainClassName'</span>)) &#123;</span><br><span class="line">        main = mainClassName</span><br><span class="line">        <span class="keyword">classpath</span> = <span class="keyword">sourceSets</span>.main.runtimeClasspath</span><br><span class="line">        jvmArgs = [<span class="string">"-agentlib:jdwp=transport=dt_socket,address=31843,suspend=n,server=y"</span>, <span class="string">"-Dgreeting=hello"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="调试gradle启动的程序："><a href="#调试gradle启动的程序：" class="headerlink" title="调试gradle启动的程序："></a>调试gradle启动的程序：</h4><p><code>GRADLE_OPTS</code>环境变量只是把给定的参数传递给<code>gradle</code>，没有传递给要执行的<code>main-class</code>。比如要调试程序，用<code>GRADLE_OPTS</code>是没用的，我们不调试<code>gradle</code>，我们需要调试的是<code>main-class</code>，故需要用<code>jvmArgs</code>。</p>
-<h4 id="两个参考链接"><a href="#两个参考链接" class="headerlink" title="两个参考链接"></a>两个参考链接</h4><ul>
-<li><p>(1) <a href="https://docs.gradle.org/current/userguide/application_plugin.html" target="_blank" rel="noopener">The Application Plugin - Gradle User Manual</a></p>
-</li>
-<li><p>(2) <a href="https://stackoverflow.com/questions/21358466/gradle-to-execute-java-class-without-modifying-build-gradle" target="_blank" rel="noopener">Gradle to execute Java class (without modifying build.gradle) - Stack Overflow</a></p>
-</li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a href="/2018/03/30/gradle-execute-main-class.html#more">阅读全文&gt;&gt;</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
@@ -498,11 +542,15 @@ ga('send', 'pageview');
       <ul>
         
           <li>
-            <a href="/2019/01/15/recover-after-git-stash-clear.html">git stash clear 后，找回 stash 的代码</a>
+            <a href="/2019/01/15/recover-after-git-stash-clear.html">git stash clear 后恢复代码</a>
           </li>
         
           <li>
-            <a href="/2018/09/24/git-sparse-checkout.html">git clone/checkout 克隆或下载仓库中指定文件/文件夹(目录)</a>
+            <a href="/2018/12/21/spring-cloud-zone-usage.html">spring-cloud zone, 类似 dubbo group 功能</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/24/git-sparse-checkout.html">git clone/checkout 指定文件/目录</a>
           </li>
         
           <li>
@@ -511,10 +559,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2018/03/30/gradle-execute-main-class.html">关于 Gradle 执行 main-class</a>
-          </li>
-        
-          <li>
-            <a href="/2016/12/19/markup-text.html">标记语言文本学习</a>
           </li>
         
       </ul>
@@ -529,7 +573,7 @@ ga('send', 'pageview');
       分类
     </h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/代码管理/">代码管理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源工具/">开源工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/构建工具/">构建工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/网页搭建/">网页搭建</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/代码管理/">代码管理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源工具/">开源工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/构建工具/">构建工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/网页搭建/">网页搭建</a></li></ul>
     </div>
   </div>
 
@@ -542,7 +586,7 @@ ga('send', 'pageview');
       标签
     </h3>
     <div class="widget tagcloud">
-      <a href="/tags/Blog/" style="font-size: 10px;">Blog</a> <a href="/tags/Gradle/" style="font-size: 15px;">Gradle</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/RDoc/" style="font-size: 10px;">RDoc</a> <a href="/tags/WEB/" style="font-size: 10px;">WEB</a> <a href="/tags/YAML/" style="font-size: 10px;">YAML</a> <a href="/tags/git/" style="font-size: 20px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/reStructuredText/" style="font-size: 10px;">reStructuredText</a> <a href="/tags/textile/" style="font-size: 10px;">textile</a>
+      <a href="/tags/Blog/" style="font-size: 10px;">Blog</a> <a href="/tags/Gradle/" style="font-size: 15px;">Gradle</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/RDoc/" style="font-size: 10px;">RDoc</a> <a href="/tags/WEB/" style="font-size: 10px;">WEB</a> <a href="/tags/YAML/" style="font-size: 10px;">YAML</a> <a href="/tags/git/" style="font-size: 20px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/reStructuredText/" style="font-size: 10px;">reStructuredText</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/spring-cloud/" style="font-size: 10px;">spring-cloud</a> <a href="/tags/textile/" style="font-size: 10px;">textile</a>
     </div>
   </div>
 
@@ -554,7 +598,7 @@ ga('send', 'pageview');
       归档
     </h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li></ul>
     </div>
   </div>
 

@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://liumengjun.github.io/2018/12/21/spring-cloud-zone-usage.html</loc>
+    <lastmod>2019-04-02</lastmod>
+  </url>  <url>
     <loc>https://liumengjun.github.io/2019/01/15/recover-after-git-stash-clear.html</loc>
-    <lastmod>2019-04-01</lastmod>
+    <lastmod>2019-04-02</lastmod>
   </url>  <url>
     <loc>https://liumengjun.github.io/2018/09/24/git-sparse-checkout.html</loc>
-    <lastmod>2019-04-01</lastmod>
-  </url>  <url>
-    <loc>https://liumengjun.github.io/2018/03/31/gradle-test-source-dependencies.html</loc>
-    <lastmod>2019-04-01</lastmod>
+    <lastmod>2019-04-02</lastmod>
   </url>  <url>
     <loc>https://liumengjun.github.io/2018/03/30/gradle-execute-main-class.html</loc>
-    <lastmod>2019-04-01</lastmod>
+    <lastmod>2019-04-02</lastmod>
+  </url>  <url>
+    <loc>https://liumengjun.github.io/2018/03/31/gradle-test-source-dependencies.html</loc>
+    <lastmod>2019-04-02</lastmod>
   </url>  <url>
     <loc>https://liumengjun.github.io/2016/11/15/tricks-gh.html</loc>
     <lastmod>2017-01-11</lastmod>
