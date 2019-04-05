@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://liumengjun.github.io/2019/03/29/java11-var-shebang-feature.html</loc>
+    <lastmod>2019-04-05</lastmod>
+  </url>  <url>
     <loc>https://liumengjun.github.io/2019/03/16/node-puppeteer-docker.html</loc>
     <lastmod>2019-04-05</lastmod>
   </url>  <url>

@@ -3,18 +3,20 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>分类: 代码管理 | Simple Space</title>
+  <title>java11 var 关键字和 cli 方式执行 | Simple Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simple Space">
-<meta property="og:url" content="https://liumengjun.github.io/categories/代码管理/index.html">
+  <meta name="description" content="java11 在语法上支持动态类型推断，还支持在命令行运行源码。其实var关键字在java10已经支持了，而且从java9开始就添加了jshell命令等，不过9和10都已经夭折了，而且现在java11都更新过一个版本了，我们大大方方的讨论java11吧。 动态类型推断，这个术语可能不严谨，openjdk网站上描述是Local-Variable Type Inference(本地变量类型推断)，参考">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java11 var 关键字和 cli 方式执行">
+<meta property="og:url" content="https://liumengjun.github.io/2019/03/29/java11-var-shebang-feature.html">
 <meta property="og:site_name" content="Simple Space">
-<meta property="og:description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
+<meta property="og:description" content="java11 在语法上支持动态类型推断，还支持在命令行运行源码。其实var关键字在java10已经支持了，而且从java9开始就添加了jshell命令等，不过9和10都已经夭折了，而且现在java11都更新过一个版本了，我们大大方方的讨论java11吧。 动态类型推断，这个术语可能不严谨，openjdk网站上描述是Local-Variable Type Inference(本地变量类型推断)，参考">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-05T14:34:21.249Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simple Space">
-<meta name="twitter:description" content="liumengjun&apos;s blog, Mengjun Liu&apos;s Blog, 刘孟军的主页(home page)">
+<meta name="twitter:title" content="java11 var 关键字和 cli 方式执行">
+<meta name="twitter:description" content="java11 在语法上支持动态类型推断，还支持在命令行运行源码。其实var关键字在java10已经支持了，而且从java9开始就添加了jshell命令等，不过9和10都已经夭折了，而且现在java11都更新过一个版本了，我们大大方方的讨论java11吧。 动态类型推断，这个术语可能不严谨，openjdk网站上描述是Local-Variable Type Inference(本地变量类型推断)，参考">
   
     <link rel="alternate" href="/atom.xml" title="Simple Space" type="application/atom+xml">
   
@@ -123,68 +125,73 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/15/recover-after-git-stash-clear.html" class="archive-article-date">
-  <time datetime="2019-01-15T13:32:21.000Z" itemprop="datePublished">1月 15</time>
+        <section id="main"><article id="post-java11-var-shebang-feature" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/29/java11-var-shebang-feature.html" class="article-date">
+  <time datetime="2019-03-29T13:47:06.000Z" itemprop="datePublished">2019-03-29</time>
 </a>
-      
+    
+  <div class="article-category">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    <a class="article-category-link" href="/categories/程序语言/">程序语言</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/15/recover-after-git-stash-clear.html">git stash clear 后恢复代码</a>
+    <h1 class="article-title" itemprop="name">
+      java11 var 关键字和 cli 方式执行
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
       
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/09/24/git-sparse-checkout.html" class="archive-article-date">
-  <time datetime="2018-09-24T15:31:17.000Z" itemprop="datePublished">9月 24</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/24/git-sparse-checkout.html">git clone/checkout 指定文件/目录</a>
-    </h1>
-  
+        <p>java11 在语法上支持动态类型推断，还支持在命令行运行源码。其实<code>var</code>关键字在java10已经支持了，而且从java9开始就添加了<code>jshell</code>命令等，不过9和10都已经夭折了，而且现在java11都更新过一个版本了，我们大大方方的讨论java11吧。</p>
+<p><strong>动态类型推断</strong>，这个术语可能不严谨，<code>openjdk</code>网站上描述是<code>Local-Variable Type Inference</code>(本地变量类型推断)，参考 <a href="http://openjdk.java.net/jeps/286" target="_blank" rel="noopener">JEP 286</a>。</p>
+<p><strong>在命令行运行源码</strong>，不是指<code>jshell</code>，而是<code>Launch Single-File Source-Code Programs</code>(启动单个源码程序)，<code>java</code>命令直接启动源码文件，还有<code>shebang</code>特性，参考 <a href="http://openjdk.java.net/jeps/330" target="_blank" rel="noopener">JEP 330</a>。</p>
+<h3 id="看个简单例子：创建Hello-java文件，内容如下"><a href="#看个简单例子：创建Hello-java文件，内容如下" class="headerlink" title="看个简单例子：创建Hello.java文件，内容如下"></a>看个简单例子：创建<code>Hello.java</code>文件，内容如下</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">var</span> hi = <span class="string">"hello world"</span>;</span><br><span class="line">        <span class="keyword">var</span> bool = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">var</span> i = <span class="number">1</span>;</span><br><span class="line">        list.add(hi);</span><br><span class="line">        list.add(bool);</span><br><span class="line">        list.add(i+i);</span><br><span class="line">        System.out.println(list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到代码中使用了<code>var</code>关键字，即使用了<strong>动态类型推断</strong>特性。<br>然后，<strong>在命令行中执行</strong><code>java Hello.java</code>命令，输出<code>[hello world, true, 2]</code>。<br><a id="more"></a></p>
+<p>注意：如果你的系统中安装了多个<code>java</code>版本，请确保<code>java11</code>为当前默认的java版本。比如，也安装了<code>java8</code>，而且平时默认是<code>java8</code>，需要临时改一下：在命令行中设置<code>JAVA_HOME</code>为<code>jdk11</code>的安装目录，然后把新<code>JAVA_HOME</code>/bin路径放到当前<code>PATH</code>的环境变量的最前面，这样就可以了。</p>
+<h3 id="下面看一看Shebang特性："><a href="#下面看一看Shebang特性：" class="headerlink" title="下面看一看Shebang特性："></a>下面看一看<code>Shebang</code>特性：</h3><p>把Hello.java复制一份为Hello，<code>cp Hello.java Hello</code>，然后在Hello的文件头添加一行内容<br><code>#!/usr/bin/java --source 11</code><br>(注意，不要直接修改Hello.java文件)。此时文件内容形如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/java --source 11</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">public class Hello &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        var list = new ArrayList&lt;&gt;();</span><br><span class="line">... ...</span><br></pre></td></tr></table></figure>
+<p>把Hello设置为可执行文件<code>chmod +x Hello</code>，然后执行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./Hello</span><br></pre></td></tr></table></figure></p>
+<p>可以看到命令正常运行，输出<code>[hello world, true, 2]</code>。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://openjdk.java.net/jeps/286" target="_blank" rel="noopener">http://openjdk.java.net/jeps/286</a></li>
+<li><a href="http://openjdk.java.net/jeps/330" target="_blank" rel="noopener">http://openjdk.java.net/jeps/330</a></li>
+<li><a href="https://stackoverflow.com/questions/52530470/java-11-executing-source-file-via-shebang-is-not-working" target="_blank" rel="noopener">https://stackoverflow.com/questions/52530470/java-11-executing-source-file-via-shebang-is-not-working</a></li>
+</ul>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://liumengjun.github.io/2019/03/29/java11-var-shebang-feature.html" data-id="cju469sai0000ukjwvuibkbar" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/16/node-puppeteer-docker.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">较旧</strong>
+      <div class="article-nav-title">构建 puppeteer docker 镜像</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
