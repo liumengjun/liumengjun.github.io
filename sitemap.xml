@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://liumengjun.github.io/2021/03/18/distributed-computation.html</loc>
+    
+    <lastmod>2023-03-15T12:15:01.489Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://liumengjun.github.io/2021/01/26/data-store-trend.html</loc>
+    
+    <lastmod>2023-03-15T11:56:44.053Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://liumengjun.github.io/2021/01/25/kafka-intro.html</loc>
+    
+    <lastmod>2023-03-15T10:06:38.350Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://liumengjun.github.io/2019/05/08/jpa-query-demos.html</loc>
+    
+    <lastmod>2023-03-15T09:29:23.059Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://liumengjun.github.io/2019/03/29/java11-var-shebang-feature.html</loc>
     
     <lastmod>2019-04-05T14:34:21.249Z</lastmod>

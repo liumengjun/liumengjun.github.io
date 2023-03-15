@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>分布式数据计算引擎研习 | Simple Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="distributed computing frameworksspark, impala, bigquery, dask .etc Big Concept1, 经典MapReduce(Calculate Word Count by MapReduce)">
+<meta name="keywords" content="数据库,大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式数据计算引擎研习">
+<meta property="og:url" content="https://liumengjun.github.io/2021/03/18/distributed-computation.html">
+<meta property="og:site_name" content="Simple Space">
+<meta property="og:description" content="distributed computing frameworksspark, impala, bigquery, dask .etc Big Concept1, 经典MapReduce(Calculate Word Count by MapReduce)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://liumengjun.github.io/images/distributed-computation/mapreduce-wordcount.png">
+<meta property="og:image" content="https://liumengjun.github.io/images/distributed-computation/spark-dag.png">
+<meta property="og:image" content="https://liumengjun.github.io/images/distributed-computation/dremel-service_tree-demo.png">
+<meta property="og:image" content="https://liumengjun.github.io/images/distributed-computation/dask_y0_y3_v2.png">
+<meta property="og:image" content="https://liumengjun.github.io/images/distributed-computation/area_ACBD.png">
+<meta property="og:updated_time" content="2023-03-15T12:15:01.489Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式数据计算引擎研习">
+<meta name="twitter:description" content="distributed computing frameworksspark, impala, bigquery, dask .etc Big Concept1, 经典MapReduce(Calculate Word Count by MapReduce)">
+<meta name="twitter:image" content="https://liumengjun.github.io/images/distributed-computation/mapreduce-wordcount.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Simple Space" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+    <link href="/css/source-code-pro.css" rel="stylesheet" type="text/css">
+  
+  <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/less/search-form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-89148405-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Simple Space</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">这片世界是持有更高级文明的生命体创造的小宇宙</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/"
+            
+            >
+            <i class="fa fa-home" aria-hidden="true"></i>
+            首页
+          </a>
+        
+          <a class="main-nav-link" href="/archives"
+            
+            >
+            <i class="fa fa-archive" aria-hidden="true"></i>
+            归档
+          </a>
+        
+          <a class="main-nav-link" href="/repos"
+            
+            >
+            <i class="fa fa-list-ul" aria-hidden="true"></i>
+            Repos
+          </a>
+        
+          <a class="main-nav-link" href="//github.com/liumengjun"
+            
+              target="_blank"
+            
+            >
+            <i class="fa fa-github" aria-hidden="true"></i>
+            GitHub
+          </a>
+        
+          <a class="main-nav-link" href="/about"
+            
+            >
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+            关于
+          </a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <!-- <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://liumengjun.github.io"></form> -->
+        <div id="search-form">
+          <div id="result-mask" class="result-mask"></div>
+          <label><input id="search-key" type="text" autocomplete="off" placeholder="请输入关键字..."></label>
+          <div id="result-wrap" class="result-wrap">
+            <div id="search-result"></div>
+          </div>
+          <div style="display: none">
+            <template id="search-tpl">
+              <div class="item">
+                <a href="/{path}" title="{title}">
+                  <div class="title">{title}</div>
+                  <div class="time">{date}</div>
+                  <div class="tags">{tags}</div>
+                </a>
+              </div>
+            </template>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-distributed-computation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/18/distributed-computation.html" class="article-date">
+  <time datetime="2021-03-18T13:10:35.000Z" itemprop="datePublished">2021-03-18</time>
+</a>
+    
+  <div class="article-category">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    <a class="article-category-link" href="/categories/大数据/">大数据</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      分布式数据计算引擎研习
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="distributed-computing-frameworks"><a href="#distributed-computing-frameworks" class="headerlink" title="distributed computing frameworks"></a>distributed computing frameworks</h2><p><code>spark, impala, bigquery, dask .etc</code></p>
+<h2 id="Big-Concept"><a href="#Big-Concept" class="headerlink" title="Big Concept"></a>Big Concept</h2><h4 id="1-经典MapReduce"><a href="#1-经典MapReduce" class="headerlink" title="1, 经典MapReduce"></a>1, 经典<code>MapReduce</code></h4><p><img src="/images/distributed-computation/mapreduce-wordcount.png" alt="WordCount by MapReduce"><br><em>(Calculate Word Count by MapReduce)</em><br><a id="more"></a></p>
+<p>MapReduce采用<code>“分而治之”</code>策略。MapReduce将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce。一个存储在分布式文件系统中的大规模数据集，会被切分成许多独立的分片（split），这些分片可以被多个Map任务并行处理。通过Reduce最终把各个分片任务中间结果合并成一个结果。</p>
+<h4 id="2-DAG-Directed-Acyclic-Graph-有向无环图"><a href="#2-DAG-Directed-Acyclic-Graph-有向无环图" class="headerlink" title="2, DAG(Directed Acyclic Graph)有向无环图"></a>2, <code>DAG(Directed Acyclic Graph)有向无环图</code></h4><p><img src="/images/distributed-computation/spark-dag.png" alt="Spark DAG"><br><em>(Spark DAG Demo)</em></p>
+<p>RDD算子构建了RDD之间的关系，整个计算过程形成了一个由RDD和关系构成的DAG。点就是RDD（或者stage）, 线就是RDD算子（或者宽依赖算子）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我们使用 spark-submit 提交的就是一个 application， 一个 application 可以有很多job。</span><br><span class="line">对 RDD 进行 action操作时，就会产生一个Job。</span><br><span class="line">每一个Job 又会根据 shuffle 操作，分为多个stage。</span><br><span class="line">一个stage会根据RDD的分区数，分为多个task。</span><br></pre></td></tr></table></figure>
+<h4 id="3-MLST-Multi-Level-Service-Tree"><a href="#3-MLST-Multi-Level-Service-Tree" class="headerlink" title="3, MLST (Multi-Level Service Tree)"></a>3, <code>MLST (Multi-Level Service Tree)</code></h4><p><img src="/images/distributed-computation/dremel-service_tree-demo.png" alt="Dremel Service-Tree Demo"><br><em>(An example of Dremel Service-Tree)</em></p>
+<p>根服务器收到此查询时，首先要做的是将查询转换为可以由下一级别的服务树处理的形式。它确定表T的所有分片，然后简化查询。<br>在这里，R11，R12，…R1n是发送到服务树的第1级的Mixer 1,…,n的查询结果。<br><code>R1i = SELECT A, COUNT(B) AS c FROM T1i GROUP BY A</code><br>下一步Mixer修改传入的查询，以便它们可以将其传递给Leaf节点。叶子节点接收自定义查询并从Colossus(数据存储层)分片读取数据。Lead节点读取查询中提到的列或字段的数据。当叶节点扫描分片时，它并行地浏览打开的列文件，一次一行。</p>
+<h2 id="spark-vs-impala"><a href="#spark-vs-impala" class="headerlink" title="spark vs impala"></a>spark vs impala</h2><p>Impala查询器将所有内容缓存在内存中，而Spark将需要时间来提取此数据以执行查询计划。</p>
+<p>shuffle实现方式, Spark在stage边界将临时文件写入磁盘，然而Impala尝试将所有内容保留在内存中。 Spark可以从丢失执行程序中恢复并通过重新计算丢失的块继续运行, Impala在单个impalad守护程序崩溃后将使整个查询失败。</p>
+<p>工作分配机制不同 – Spark(DAG)将编译生成后的整个阶段代码发送给workers，Impala(MLST)只传递声明式查询片段。</p>
+<p><del>“查询优化技术（查询矢量化，动态分区修剪，基于成本的优化）-平分秋色，提升点也差不多。”</del></p>
+<h2 id="Dask-Example"><a href="#Dask-Example" class="headerlink" title="Dask Example"></a>Dask Example</h2><p><img src="/images/distributed-computation/dask_y0_y3_v2.png" alt="Dask Task Graph Example"><br><em>(Dask Task Graph Example)</em></p>
+<p><code>积分方式计算ACBD区域面积</code><br><img src="/images/distributed-computation/area_ACBD.png" alt="积分方式计算ACBD区域面积"></p>
+<blockquote>
+<p><em><code>sum(y0(x) - y3(x) for x in x_range)</code></em></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">16</span></span><br><span class="line">delta_x = <span class="number">1</span> / n</span><br><span class="line">x_range = [i / n <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">y0</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="string">"""y0 = sqrt(1-x^2)"""</span></span><br><span class="line">    <span class="keyword">import</span> math</span><br><span class="line">    <span class="keyword">return</span> delta_x * math.sqrt(<span class="number">1</span> - x * x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">y3</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="string">"""y3 = 1 - x"""</span></span><br><span class="line">    <span class="keyword">return</span> delta_x * (<span class="number">1</span> - x)</span><br><span class="line"></span><br><span class="line">a_quarter_circle_y = client.map(y0, x_range)</span><br><span class="line">a_triangle_y = client.map(y3, x_range)</span><br><span class="line">a_target_s = client.map(operator.sub, a_quarter_circle_y, a_triangle_y)</span><br><span class="line">a_target = client.submit(sum, a_target_s)</span><br><span class="line"><span class="comment"># a_target.result()</span></span><br><span class="line"><span class="comment"># 0.28081325945693536</span></span><br></pre></td></tr></table></figure>
+<h2 id="dask-vs-spark"><a href="#dask-vs-spark" class="headerlink" title="dask vs spark"></a>dask vs spark</h2><p><strong>Spark和Dask都用有向无环图表示计算。但是这些图的粒度不同。</strong></p>
+<p>在Spark RDD上执行的一项操作可能会将一个节点（例如Map和Filter）添加到图形中。这些是传达含义的高级操作，最终将变成许多要在单个工人上执行的小任务。这个小任务状态仅在Spark调度程序内部可用。（Spark stage 是一个物理执行单位。stage 是一组并行任务 - 每个分区一个任务。）</p>
+<p>Dask跳过了这种高级表示，而直接进入了许多小任务阶段。这样，对Dask集合进行一次映射操作将立即生成并可能将数千个微小任务添加到Dask图中。</p>
+<p>基础图规模的这种差异影响着可以进行的分析和优化的种类，也影响了用户暴露给用户的普遍性。 Dask无法执行Spark进行的某些优化，因为Dask调度程序没有自上而下执行的计算的图。但是，Dask能够轻松代表更复杂的算法，并将这些算法的创建向普通用户公开。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://data-flair.training/blogs/dag-in-apache-spark/" target="_blank" rel="noopener">https://data-flair.training/blogs/dag-in-apache-spark/</a></li>
+<li><a href="https://storage.googleapis.com/pub-tools-public-publication-data/pdf/36632.pdf" target="_blank" rel="noopener">https://storage.googleapis.com/pub-tools-public-publication-data/pdf/36632.pdf</a></li>
+<li><a href="https://panoply.io/data-warehouse-guide/bigquery-architecture/" target="_blank" rel="noopener">https://panoply.io/data-warehouse-guide/bigquery-architecture/</a></li>
+<li><a href="https://docs.dask.org/en/latest/spark.html" target="_blank" rel="noopener">https://docs.dask.org/en/latest/spark.html</a></li>
+<li><a href="https://www.jianshu.com/p/8c7e0f5ff326" target="_blank" rel="noopener">https://www.jianshu.com/p/8c7e0f5ff326</a></li>
+<li><a href="https://waltyou.github.io/Spark-Tuning-Practice/" target="_blank" rel="noopener">https://waltyou.github.io/Spark-Tuning-Practice/</a></li>
+<li><a href="https://waltyou.github.io/Mastering-Apache-Spark-Core-7-Services-DAGScheduler/" target="_blank" rel="noopener">https://waltyou.github.io/Mastering-Apache-Spark-Core-7-Services-DAGScheduler/</a></li>
+<li><a href="https://stackoverflow.com/questions/58598727/impala-vs-spark-performance-for-ad-hoc-queries" target="_blank" rel="noopener">https://stackoverflow.com/questions/58598727/impala-vs-spark-performance-for-ad-hoc-queries</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://liumengjun.github.io/2021/03/18/distributed-computation.html" data-id="clf9oukm90002i7jwuebyktbz" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/26/data-store-trend.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">较旧</strong>
+      <div class="article-nav-title">漫谈数据存储发展</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+      <i class="fa fa-file-text-o" aria-hidden="true"></i>
+      最新文章
+    </h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/18/distributed-computation.html">分布式数据计算引擎研习</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/26/data-store-trend.html">漫谈数据存储发展</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/25/kafka-intro.html">Kafka入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/08/jpa-query-demos.html">JPA query 的几种写法</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/29/java11-var-shebang-feature.html">java11 var 关键字和 cli 方式执行</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+      <i class="fa fa-list" aria-hidden="true"></i>
+      分类
+    </h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/代码管理/">代码管理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/开源工具/">开源工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据流处理/">数据流处理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务端/">服务端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/构建工具/">构建工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/程序语言/">程序语言</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/网页搭建/">网页搭建</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+      <i class="fa fa-tags" aria-hidden="true"></i>
+      标签
+    </h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Blog/" style="font-size: 10px;">Blog</a> <a href="/tags/Gradle/" style="font-size: 13.33px;">Gradle</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/RDoc/" style="font-size: 10px;">RDoc</a> <a href="/tags/WEB/" style="font-size: 10px;">WEB</a> <a href="/tags/YAML/" style="font-size: 10px;">YAML</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/git/" style="font-size: 16.67px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/headless/" style="font-size: 10px;">headless</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/reStructuredText/" style="font-size: 10px;">reStructuredText</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/spring-cloud/" style="font-size: 10px;">spring-cloud</a> <a href="/tags/textile/" style="font-size: 10px;">textile</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/数据库/" style="font-size: 13.33px;">数据库</a> <a href="/tags/数据流处理/" style="font-size: 10px;">数据流处理</a> <a href="/tags/消息队列/" style="font-size: 10px;">消息队列</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+      <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+      归档
+    </h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+      <i class="fa fa-share-alt" aria-hidden="true"></i>
+      友情链接
+    </h3>
+    <div class="widget">
+      <ul class="friend-list">
+        
+          <li class="friend-list-item">
+            <a class="friend-list-link" target="_blank" href="//github.com">
+              Github
+            </a>
+          </li>
+        
+          <li class="friend-list-item">
+            <a class="friend-list-link" target="_blank" href="http://eames.im/">
+              Eames.im
+            </a>
+          </li>
+        
+          <li class="friend-list-item">
+            <a class="friend-list-link" target="_blank" href="//malalaoshi.com">
+              麻辣老师
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+  
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info-left">
+      &copy; 2023 Mengjun Liu.
+      &nbsp;Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+    <a href="/"><img src="/favicon.png" /></a>
+    <div id="footer-info-right">
+      <a class="fa fa-envelope" href="mailto:mengjun_liu@126.com"></a>
+      <a class="fa fa-github" href="//github.com/liumengjun" target="_blank"></a>
+      <a class="fa fa-rss" target="_blank" href="/atom.xml"></a>
+      <a href="/baidusitemap.xml" target="_blank">Sitemap</a>
+      <a href="/about/">About</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">
+      <i class="fa fa-home" aria-hidden="true"></i>
+      首页
+    </a>
+  
+    <a href="/archives" class="mobile-nav-link">
+      <i class="fa fa-archive" aria-hidden="true"></i>
+      归档
+    </a>
+  
+    <a href="/repos" class="mobile-nav-link">
+      <i class="fa fa-list-ul" aria-hidden="true"></i>
+      Repos
+    </a>
+  
+    <a href="//github.com/liumengjun" class="mobile-nav-link">
+      <i class="fa fa-github" aria-hidden="true"></i>
+      GitHub
+    </a>
+  
+    <a href="/about" class="mobile-nav-link">
+      <i class="fa fa-info-circle" aria-hidden="true"></i>
+      关于
+    </a>
+  
+</nav>
+    
+
+<script src="/js/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/underscore-min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
